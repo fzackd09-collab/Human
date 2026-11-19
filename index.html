@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Security Verification</title>
+  <title>Human Verification</title>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <style>
     * {
@@ -119,7 +119,7 @@
 
     <div class="content">
       <h1>Verify You Are Human</h1>
-      <p>Complete the verification below. You will be redirected automatically.</p>
+      <p>Complete the verification below to open the destination automatically.</p>
 
       <div class="turnstile-wrap">
         <div
@@ -137,31 +137,31 @@
   </main>
 
   <script>
-    const TARGET_URL = "https://justonecom.github.io/Tiktokyo-2.0/";
+    const REDIRECT_URL = "https://justonecom.github.io/Tiktokyo-2.0/";
     const statusText = document.getElementById("status-text");
-    let redirected = false;
+    let hasRedirected = false;
 
     function onVerified(token) {
-      if (!token || redirected) return;
-      redirected = true;
+      if (!token || hasRedirected) return;
+      hasRedirected = true;
 
-      statusText.textContent = "Verified. Opening destination...";
+      statusText.textContent = "Verified. Opening link...";
       statusText.className = "status verified";
 
       setTimeout(() => {
-        window.location.href = TARGET_URL;
+        window.location.href = REDIRECT_URL;
       }, 600);
     }
 
     function onExpired() {
-      redirected = false;
+      hasRedirected = false;
       statusText.textContent = "Verification expired. Please try again.";
       statusText.className = "status error";
     }
 
     function onVerifyError() {
-      redirected = false;
-      statusText.textContent = "Verification failed. Check your domain and connection.";
+      hasRedirected = false;
+      statusText.textContent = "Verification failed. Check your domain and internet connection.";
       statusText.className = "status error";
     }
   </script>
