@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Security Verification</title>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #0d0f14;
+      color: #f4f6f8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 16px;
+    }
+
+    .window {
+      width: 100%;
+      max-width: 400px;
+      background-color: #151821;
+      border: 1px solid #262b38;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background-color: #11141c;
+      border-bottom: 1px solid #262b38;
+    }
+
+    .dots {
+      display: flex;
+      gap: 7px;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+
+    .dot.red { background-color: #ff5f56; }
+    .dot.yellow { background-color: #ffbd2e; }
+    .dot.green { background-color: #27c93f; }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ff3b5c;
+    }
+
+    .content {
+      padding: 24px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+
+    p {
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: #9aa3b2;
+      margin-bottom: 20px;
+    }
+
+    .turnstile-wrap {
+      display: flex;
+      justify-content: center;
+      min-height: 65px;
+      margin-bottom: 18px;
+    }
+
+    .status {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #9aa3b2;
+    }
+
+    .status.verified {
+      color: #27c93f;
+    }
+
+    .status.error {
+      color: #ff5f56;
+    }
+  </style>
+</head>
+<body>
+  <main class="window">
+    <div class="topbar">
+      <div class="dots">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+      </div>
+      <span class="badge">Human Check</span>
+    </div>
+
+    <div class="content">
+      <h1>Verify You Are Human</h1>
+      <p>Complete the verification below. You will be redirected automatically.</p>
+
+      <div class="turnstile-wrap">
+        <div
+          class="cf-turnstile"
+          data-sitekey="0x4AAAAAAGIurRXZpSv1R-eO"
+          data-theme="dark"
+          data-callback="onVerified"
+          data-expired-callback="onExpired"
+          data-error-callback="onVerifyError"
+        ></div>
+      </div>
+
+      <div id="status-text" class="status">Waiting for verification...</div>
+    </div>
+  </main>
+
+  <script>
+    const TARGET_URL = "https://justonecom.github.io/Tiktokyo-2.0/";
+    const statusText = document.getElementById("status-text");
+    let redirected = false;
+
+    function onVerified(token) {
+      if (!token || redirected) return;
+      redirected = true;
+
+      statusText.textContent = "Verified. Opening destination...";
+      statusText.className = "status verified";
+
+      setTimeout(() => {
+        window.location.href = TARGET_URL;
+      }, 600);
+    }
+
+    function onExpired() {
+      redirected = false;
+      statusText.textContent = "Verification expired. Please try again.";
+      statusText.className = "status error";
+    }
+
+    function onVerifyError() {
+      redirected = false;
+      statusText.textContent = "Verification failed. Check your domain and connection.";
+      statusText.className = "status error";
+    }
+  </script>
+</body>
+</html>
