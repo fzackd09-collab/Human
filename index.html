@@ -73,6 +73,26 @@
       }
     }
 
+    @keyframes badgeShineSweep {
+      0% {
+        transform: translateX(-150%) skewX(-24deg);
+      }
+      60%, 100% {
+        transform: translateX(260%) skewX(-24deg);
+      }
+    }
+
+    @keyframes iconShimmer {
+      0%, 100% {
+        transform: translateY(0px);
+        filter: drop-shadow(0 0 0 rgba(255, 255, 255, 0));
+      }
+      50% {
+        transform: translateY(-1.5px);
+        filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.22));
+      }
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background-color: #09090b;
@@ -143,6 +163,81 @@
       color: #a1a1aa;
       text-align: center;
       margin-top: -4px;
+    }
+
+    .social-showcase-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 2px;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .shiny-static-logo {
+      position: relative;
+      overflow: hidden;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(145deg, #1b1b1f 0%, #101013 100%);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: default;
+    }
+
+    .shiny-static-logo::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 65%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.34) 50%,
+        transparent 100%
+      );
+      transform: translateX(-150%) skewX(-24deg);
+      animation: badgeShineSweep 3s ease-in-out infinite;
+    }
+
+    .shiny-static-logo:nth-child(2)::before {
+      animation-delay: 0.45s;
+    }
+
+    .shiny-static-logo:nth-child(3)::before {
+      animation-delay: 0.9s;
+    }
+
+    .shiny-static-logo:nth-child(4)::before {
+      animation-delay: 1.35s;
+    }
+
+    .shiny-static-logo svg {
+      position: relative;
+      z-index: 1;
+      width: 21px;
+      height: 21px;
+      animation: iconShimmer 3s ease-in-out infinite;
+    }
+
+    .shiny-static-logo:nth-child(2) svg {
+      animation-delay: 0.45s;
+    }
+
+    .shiny-static-logo:nth-child(3) svg {
+      animation-delay: 0.9s;
+    }
+
+    .shiny-static-logo:nth-child(4) svg {
+      animation-delay: 1.35s;
     }
 
     .layout-grid {
@@ -500,6 +595,34 @@
       <div id="random-logo" class="random-logo-badge" aria-label="Random emblem"></div>
       <h1 class="page-title">Human Verification & Gmail Sign-In</h1>
       <p class="page-subtitle">Complete human check and slide Gmail logo to sign in</p>
+
+      <div class="social-showcase-strip" aria-label="Platform badges" aria-hidden="true">
+        <div class="shiny-static-logo" title="TikTok">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M14.5 3.5V14.2C14.5 16.19 12.89 17.8 10.9 17.8C8.91 17.8 7.3 16.19 7.3 14.2C7.3 12.21 8.91 10.6 10.9 10.6C11.25 10.6 11.58 10.65 11.9 10.74V7.52C11.57 7.47 11.24 7.45 10.9 7.45C7.17 7.45 4.15 10.47 4.15 14.2C4.15 17.93 7.17 20.95 10.9 20.95C14.63 20.95 17.65 17.93 17.65 14.2V9.35C18.92 10.26 20.47 10.8 22.15 10.8V7.68C19.68 7.68 17.65 5.65 17.65 3.5H14.5Z" fill="#ffffff" />
+          </svg>
+        </div>
+
+        <div class="shiny-static-logo" title="Telegram">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M20.66 4.62L3.57 11.21C2.4 11.68 2.41 12.33 3.36 12.62L7.75 13.99L17.9 7.58C18.38 7.29 18.82 7.45 18.46 7.77L10.24 15.19H10.22L10.24 15.2L9.94 19.68C10.38 19.68 10.57 19.48 10.82 19.24L12.95 17.17L17.38 20.44C18.2 20.89 18.79 20.66 18.99 19.68L21.9 5.96C22.2 4.75 21.44 4.2 20.66 4.62Z" fill="#ffffff" />
+          </svg>
+        </div>
+
+        <div class="shiny-static-logo" title="Discord">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M19.2 5.8C17.8 5.15 16.3 4.68 14.74 4.41C14.54 4.76 14.31 5.23 14.15 5.61C12.47 5.36 10.81 5.36 9.16 5.61C9 5.23 8.76 4.76 8.56 4.41C7 4.68 5.5 5.15 4.1 5.8C1.32 9.95 0.56 14 0.94 18C2.78 19.35 4.56 20.17 6.31 20.71C6.74 20.12 7.12 19.49 7.45 18.83C6.83 18.6 6.23 18.31 5.67 17.97C5.82 17.86 5.97 17.75 6.11 17.63C9.57 19.21 13.33 19.21 16.75 17.63C16.9 17.75 17.05 17.86 17.19 17.97C16.63 18.31 16.03 18.6 15.41 18.83C15.74 19.49 16.12 20.12 16.55 20.71C18.3 20.17 20.08 19.35 21.92 18C22.37 13.36 21.15 9.29 19.2 5.8ZM8.45 15.55C7.41 15.55 6.56 14.6 6.56 13.43C6.56 12.26 7.39 11.31 8.45 11.31C9.51 11.31 10.35 12.26 10.34 13.43C10.34 14.6 9.51 15.55 8.45 15.55ZM14.85 15.55C13.81 15.55 12.96 14.6 12.96 13.43C12.96 12.26 13.79 11.31 14.85 11.31C15.91 11.31 16.75 12.26 16.74 13.43C16.74 14.6 15.91 15.55 14.85 15.55Z" fill="#ffffff" />
+          </svg>
+        </div>
+
+        <div class="shiny-static-logo" title="Instagram">
+          <svg viewBox="0 0 24 24" fill="none">
+            <rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="#ffffff" stroke-width="2" />
+            <circle cx="12" cy="12" r="4" stroke="#ffffff" stroke-width="2" />
+            <circle cx="17.2" cy="6.8" r="1.2" fill="#ffffff" />
+          </svg>
+        </div>
+      </div>
     </header>
 
     <div class="layout-grid">
