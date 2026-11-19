@@ -52,7 +52,7 @@
       max-width: 360px;
       background-color: #161b22;
       border: 1px solid #30363d;
-      border-radius: 6px;
+      border-radius: 12px;
       padding: 20px;
     }
 
@@ -94,10 +94,10 @@
     .gmail-badge {
       display: none;
       width: 100%;
-      padding: 8px 10px;
+      padding: 8px 12px;
       background-color: #0d1117;
       border: 1px solid #30363d;
-      border-radius: 6px;
+      border-radius: 999px;
       font-size: 12px;
       color: #3fb950;
       word-break: break-all;
@@ -128,7 +128,7 @@
       color: #ffffff;
       background-color: #1f6feb;
       border: 1px solid rgba(240, 246, 252, 0.1);
-      border-radius: 6px;
+      border-radius: 10px;
       cursor: pointer;
       transition: background-color 0.15s ease, opacity 0.15s ease;
     }
@@ -148,13 +148,37 @@
       cursor: not-allowed;
     }
 
+    .coming-soon-box {
+      display: none;
+      margin-top: 16px;
+      padding: 14px 16px;
+      background-color: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .coming-soon-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: #58a6ff;
+      margin-bottom: 6px;
+    }
+
+    .coming-soon-text {
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: #8b949e;
+    }
+
     .gh-footer {
       width: 100%;
       max-width: 360px;
       margin-top: 14px;
       padding: 12px 14px;
       border: 1px solid #30363d;
-      border-radius: 6px;
+      border-radius: 12px;
       font-size: 12px;
       color: #8b949e;
       text-align: center;
@@ -207,7 +231,7 @@
         data-size="large"
         data-theme="filled_blue"
         data-text="signin_with"
-        data-shape="rectangular"
+        data-shape="pill"
         data-logo_alignment="left"
       ></div>
       <div id="gmail-badge" class="gmail-badge"></div>
@@ -216,6 +240,11 @@
     <div id="status-msg" class="status-msg">Complete human check and Gmail sign-in.</div>
 
     <button id="continue-btn" class="btn-blue" type="button" disabled>Continue</button>
+
+    <section id="coming-soon-box" class="coming-soon-box">
+      <div class="coming-soon-title">COMING SOON</div>
+      <p class="coming-soon-text">The site is currently under preparation. Please check back later.</p>
+    </section>
   </main>
 
   <footer class="gh-footer">
@@ -223,10 +252,10 @@
   </footer>
 
   <script>
-    const TARGET_URL = "https://justonecom.github.io/Tiktokyo-2.0/";
     const statusMsg = document.getElementById("status-msg");
     const continueBtn = document.getElementById("continue-btn");
     const gmailBadge = document.getElementById("gmail-badge");
+    const comingSoonBox = document.getElementById("coming-soon-box");
 
     let humanOk = false;
     let gmailEmail = "";
@@ -245,7 +274,7 @@
 
     function updateReadyState() {
       if (humanOk && gmailEmail) {
-        statusMsg.textContent = "Ready. Click Continue to open the destination.";
+        statusMsg.textContent = "Ready. Click Continue to view site status.";
         statusMsg.className = "status-msg success";
         continueBtn.disabled = false;
       } else if (humanOk && !gmailEmail) {
@@ -297,9 +326,11 @@
 
     continueBtn.addEventListener("click", () => {
       if (!humanOk || !gmailEmail) return;
-      continueBtn.textContent = "Redirecting...";
+      comingSoonBox.style.display = "block";
+      statusMsg.textContent = "Access confirmed. Site is coming soon.";
+      statusMsg.className = "status-msg success";
+      continueBtn.textContent = "Coming Soon";
       continueBtn.disabled = true;
-      window.location.href = TARGET_URL;
     });
   </script>
 </body>
