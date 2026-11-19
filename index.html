@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Security Verification</title>
+  <title>Verify & Sign in with Gmail</title>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     * {
       box-sizing: border-box;
@@ -25,20 +26,20 @@
     }
 
     .gh-header {
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .gh-logo {
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       fill: #f0f6fc;
     }
 
     .gh-title {
-      font-size: 22px;
+      font-size: 21px;
       font-weight: 300;
       letter-spacing: -0.02em;
       color: #f0f6fc;
@@ -55,12 +56,18 @@
       padding: 20px;
     }
 
+    .step-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #e6edf3;
+      margin-bottom: 8px;
+    }
+
     .gh-desc {
-      font-size: 13px;
+      font-size: 12.5px;
       line-height: 1.5;
       color: #8b949e;
-      margin-bottom: 16px;
-      text-align: center;
+      margin-bottom: 14px;
     }
 
     .turnstile-box {
@@ -70,11 +77,38 @@
       margin-bottom: 14px;
     }
 
+    .divider {
+      border: 0;
+      border-top: 1px solid #30363d;
+      margin: 16px 0;
+    }
+
+    .google-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .gmail-badge {
+      display: none;
+      width: 100%;
+      padding: 8px 10px;
+      background-color: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #3fb950;
+      word-break: break-all;
+      text-align: center;
+    }
+
     .status-msg {
       font-size: 12px;
       text-align: center;
       color: #8b949e;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       min-height: 18px;
     }
 
@@ -117,8 +151,8 @@
     .gh-footer {
       width: 100%;
       max-width: 360px;
-      margin-top: 16px;
-      padding: 14px 16px;
+      margin-top: 14px;
+      padding: 12px 14px;
       border: 1px solid #30363d;
       border-radius: 6px;
       font-size: 12px;
@@ -138,60 +172,131 @@
     </svg>
   </div>
 
-  <h1 class="gh-title">Verify your session</h1>
+  <h1 class="gh-title">Verify & Sign in with Gmail</h1>
 
   <main class="gh-card">
-    <p class="gh-desc">Complete the security check below to continue to the repository page.</p>
+    <div class="step-label">1. Human Verification</div>
+    <p class="gh-desc">Complete the Cloudflare security check first.</p>
 
     <div class="turnstile-box">
       <div
         class="cf-turnstile"
         data-sitekey="0x4AAAAAAGIurRXZpSv1R-eO"
         data-theme="dark"
-        data-callback="onVerified"
-        data-expired-callback="onExpired"
-        data-error-callback="onVerifyError"
+        data-callback="onHumanVerified"
+        data-expired-callback="onHumanExpired"
+        data-error-callback="onHumanError"
       ></div>
     </div>
 
-    <div id="status-msg" class="status-msg">Waiting for human verification...</div>
+    <hr class="divider" />
+
+    <div class="step-label">2. Gmail Account</div>
+    <p class="gh-desc">Sign in with your Gmail account to continue.</p>
+
+    <div class="google-box">
+      <div
+        id="g_id_onload"
+        data-client_id="794756938-hr1g57b68e7r4iapiqqmmqe4a82ck7cu.apps.googleusercontent.com"
+        data-callback="onGoogleCredential"
+        data-auto_prompt="false"
+      ></div>
+      <div
+        class="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-theme="filled_blue"
+        data-text="signin_with"
+        data-shape="rectangular"
+        data-logo_alignment="left"
+      ></div>
+      <div id="gmail-badge" class="gmail-badge"></div>
+    </div>
+
+    <div id="status-msg" class="status-msg">Complete human check and Gmail sign-in.</div>
 
     <button id="continue-btn" class="btn-blue" type="button" disabled>Continue</button>
   </main>
 
   <footer class="gh-footer">
-    Protected by <span>Cloudflare Turnstile</span>
+    <span>GitHub Style</span> • <span>Cloudflare Turnstile</span> • <span>Google Sign-In</span>
   </footer>
 
   <script>
     const TARGET_URL = "https://justonecom.github.io/Tiktokyo-2.0/";
     const statusMsg = document.getElementById("status-msg");
     const continueBtn = document.getElementById("continue-btn");
-    let verifiedToken = "";
+    const gmailBadge = document.getElementById("gmail-badge");
 
-    function onVerified(token) {
-      verifiedToken = token;
-      statusMsg.textContent = "Verification complete. Click Continue to proceed.";
-      statusMsg.className = "status-msg success";
-      continueBtn.disabled = false;
+    let humanOk = false;
+    let gmailEmail = "";
+
+    function parseJwtPayload(token) {
+      const base64Url = token.split(".")[1];
+      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split("")
+          .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+          .join("")
+      );
+      return JSON.parse(jsonPayload);
     }
 
-    function onExpired() {
-      verifiedToken = "";
-      statusMsg.textContent = "Verification expired. Please verify again.";
+    function updateReadyState() {
+      if (humanOk && gmailEmail) {
+        statusMsg.textContent = "Ready. Click Continue to open the destination.";
+        statusMsg.className = "status-msg success";
+        continueBtn.disabled = false;
+      } else if (humanOk && !gmailEmail) {
+        statusMsg.textContent = "Human check passed. Please sign in with Gmail.";
+        statusMsg.className = "status-msg";
+        continueBtn.disabled = true;
+      } else if (!humanOk && gmailEmail) {
+        statusMsg.textContent = "Gmail signed in. Complete human verification.";
+        statusMsg.className = "status-msg";
+        continueBtn.disabled = true;
+      } else {
+        statusMsg.textContent = "Complete human check and Gmail sign-in.";
+        statusMsg.className = "status-msg";
+        continueBtn.disabled = true;
+      }
+    }
+
+    function onHumanVerified(token) {
+      humanOk = Boolean(token);
+      updateReadyState();
+    }
+
+    function onHumanExpired() {
+      humanOk = false;
+      updateReadyState();
+    }
+
+    function onHumanError() {
+      humanOk = false;
+      statusMsg.textContent = "Human verification failed. Check your domain and connection.";
       statusMsg.className = "status-msg error";
       continueBtn.disabled = true;
     }
 
-    function onVerifyError() {
-      verifiedToken = "";
-      statusMsg.textContent = "Verification failed. Check your registered domain.";
-      statusMsg.className = "status-msg error";
-      continueBtn.disabled = true;
+    function onGoogleCredential(response) {
+      try {
+        const profile = parseJwtPayload(response.credential);
+        gmailEmail = profile.email || "Google Account";
+        gmailBadge.textContent = "Signed in: " + gmailEmail;
+        gmailBadge.style.display = "block";
+        updateReadyState();
+      } catch (e) {
+        gmailEmail = "";
+        statusMsg.textContent = "Unable to read Gmail account info.";
+        statusMsg.className = "status-msg error";
+        continueBtn.disabled = true;
+      }
     }
 
     continueBtn.addEventListener("click", () => {
-      if (!verifiedToken) return;
+      if (!humanOk || !gmailEmail) return;
       continueBtn.textContent = "Redirecting...";
       continueBtn.disabled = true;
       window.location.href = TARGET_URL;
