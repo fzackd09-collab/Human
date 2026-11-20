@@ -26,7 +26,7 @@
       justify-content: center;
       padding: 16px;
       overflow-x: hidden;
-      transition: background-color 0.35s ease;
+      transition: background-color 0.2s ease;
     }
 
     body.unlocked-mode {
@@ -41,7 +41,7 @@
       background:
         radial-gradient(circle at 20% 15%, rgba(79, 140, 255, 0.14), transparent 45%),
         radial-gradient(circle at 80% 85%, rgba(139, 92, 246, 0.12), transparent 45%);
-      transition: background 0.35s ease;
+      transition: background 0.2s ease;
       z-index: 0;
     }
 
@@ -61,8 +61,8 @@
       border-radius: 22px;
       padding: 22px 18px;
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
-      animation: cardEnter 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
-      transition: max-width 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, background-color 0.35s ease;
+      animation: cardEnter 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+      transition: max-width 0.25s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
     }
 
     body.unlocked-mode .card {
@@ -75,7 +75,7 @@
     @keyframes cardEnter {
       from {
         opacity: 0;
-        transform: translateY(16px) scale(0.985);
+        transform: translateY(12px) scale(0.99);
       }
       to {
         opacity: 1;
@@ -100,7 +100,7 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      transition: background 0.35s ease, border-color 0.35s ease;
+      transition: background 0.2s ease, border-color 0.2s ease;
     }
 
     body.unlocked-mode .emblem {
@@ -136,7 +136,7 @@
       margin-bottom: 16px;
       user-select: none;
       pointer-events: none;
-      transition: border-color 0.35s ease, background-color 0.35s ease;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
     }
 
     body.unlocked-mode .showcase-strip {
@@ -162,7 +162,7 @@
       height: 7px;
       border-radius: 50%;
       background: #4f8cff;
-      transition: background-color 0.35s ease;
+      transition: background-color 0.2s ease;
     }
 
     body.unlocked-mode .showcase-dot {
@@ -256,7 +256,7 @@
       color: #ffffff;
       background: linear-gradient(135deg, #22c55e 0%, #16a34a 55%, #15803d 100%);
       box-shadow: 0 6px 18px rgba(22, 163, 74, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.32);
-      transition: transform 0.15s ease;
+      transition: transform 0.12s ease;
     }
 
     .link-btn:active {
@@ -282,17 +282,17 @@
 
     .processing-box {
       text-align: center;
-      padding: 18px 10px;
+      padding: 14px 10px;
     }
 
     .spinner {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       border: 3px solid rgba(255, 255, 255, 0.16);
       border-top-color: #4ade80;
       border-radius: 50%;
-      margin: 0 auto 12px;
-      animation: spin 0.8s linear infinite;
+      margin: 0 auto 10px;
+      animation: spin 0.55s linear infinite;
     }
 
     @keyframes spin {
@@ -358,8 +358,8 @@
     <section id="step-processing" class="step-box">
       <div class="processing-box">
         <div class="spinner" aria-hidden="true"></div>
-        <div class="title" style="font-size:15px;">Processing Access</div>
-        <div id="processing-status" class="status-msg">Loading PBB website content...</div>
+        <div class="title" style="font-size:15px;">Opening PBB...</div>
+        <div id="processing-status" class="status-msg">Unlocking now...</div>
       </div>
     </section>
 
@@ -422,29 +422,22 @@
       return JSON.parse(jsonPayload);
     }
 
-    async function notifyBrowser(title, body) {
+    function notifyBrowser(title, body) {
       if (!("Notification" in window)) return;
       if (Notification.permission === "granted") {
         new Notification(title, { body });
-      } else if (Notification.permission !== "denied") {
-        const perm = await Notification.requestPermission();
-        if (perm === "granted") {
-          new Notification(title, { body });
-        }
       }
     }
 
-    async function sendDiscordLog(eventTitle, details) {
+    function sendDiscordLog(eventTitle, details) {
       if (!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL === "YOUR_DISCORD_WEBHOOK_URL") return;
-      try {
-        await fetch(DISCORD_WEBHOOK_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            content: `**${eventTitle}**\nSite: \`${SITE_NAME}\`\nEmail: \`${currentUser.email || "N/A"}\`\nDetails: ${details}`
-          })
-        });
-      } catch (_) {}
+      fetch(DISCORD_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          content: `**${eventTitle}**\nSite: \`${SITE_NAME}\`\nEmail: \`${currentUser.email || "N/A"}\`\nDetails: ${details}`
+        })
+      }).catch(() => {});
     }
 
     window.onTurnstileSuccess = function (token) {
@@ -457,7 +450,7 @@
 
     function initGoogleSignIn() {
       if (!window.google || !window.google.accounts || !window.google.accounts.id) {
-        setTimeout(initGoogleSignIn, 200);
+        setTimeout(initGoogleSignIn, 100);
         return;
       }
 
@@ -477,7 +470,7 @@
       });
     }
 
-    async function handleGoogleCredentialResponse(response) {
+    function handleGoogleCredentialResponse(response) {
       try {
         const payload = decodeJwtPayload(response.credential);
         currentUser = {
@@ -501,16 +494,15 @@
         }
 
         showStep("step-processing");
-        setMessage("processing-status", "Finishing setup and loading PBB...");
+        notifyBrowser("Access Unlocked", `${SITE_NAME}: Signed in as ${currentUser.email}.`);
+        sendDiscordLog("Access Unlocked", `User ${currentUser.email} unlocked PBB on ${SITE_NAME}.`);
 
-        await notifyBrowser("Access Unlocked", `${SITE_NAME}: Signed in as ${currentUser.email}.`);
-        await sendDiscordLog("Access Unlocked", `User ${currentUser.email} unlocked PBB on ${SITE_NAME}.`);
-        await new Promise((resolve) => setTimeout(resolve, 900));
-
-        document.body.classList.add("unlocked-mode");
-        document.getElementById("gate-subtitle").textContent = "Completed - PBB content unlocked";
-        document.getElementById("pbb-frame").src = PBB_URL;
-        showStep("step-unlocked");
+        setTimeout(() => {
+          document.body.classList.add("unlocked-mode");
+          document.getElementById("gate-subtitle").textContent = "Completed - PBB content unlocked";
+          document.getElementById("pbb-frame").src = PBB_URL;
+          showStep("step-unlocked");
+        }, 200);
       } catch (err) {
         setMessage("google-status", "Unable to read Gmail account info.", "error");
       }
