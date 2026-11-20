@@ -280,27 +280,6 @@
       display: block;
     }
 
-    .processing-box {
-      text-align: center;
-      padding: 14px 10px;
-    }
-
-    .spinner {
-      width: 24px;
-      height: 24px;
-      border: 3px solid rgba(255, 255, 255, 0.16);
-      border-top-color: #4ade80;
-      border-radius: 50%;
-      margin: 0 auto 10px;
-      animation: spin 0.55s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
     .status-msg {
       margin-top: 10px;
       font-size: 12.5px;
@@ -353,14 +332,6 @@
     <section id="step-google" class="step-box">
       <div id="google-btn-container" style="display:flex;justify-content:center;margin-bottom:10px;"></div>
       <div id="google-status" class="status-msg">Human check passed. Sign in with Gmail to continue.</div>
-    </section>
-
-    <section id="step-processing" class="step-box">
-      <div class="processing-box">
-        <div class="spinner" aria-hidden="true"></div>
-        <div class="title" style="font-size:15px;">Opening PBB...</div>
-        <div id="processing-status" class="status-msg">Unlocking now...</div>
-      </div>
     </section>
 
     <section id="step-unlocked" class="step-box">
@@ -493,16 +464,13 @@
           fallbackSvg.style.display = "block";
         }
 
-        showStep("step-processing");
+        document.body.classList.add("unlocked-mode");
+        document.getElementById("gate-subtitle").textContent = "Completed - PBB content unlocked";
+        document.getElementById("pbb-frame").src = PBB_URL;
+        showStep("step-unlocked");
+
         notifyBrowser("Access Unlocked", `${SITE_NAME}: Signed in as ${currentUser.email}.`);
         sendDiscordLog("Access Unlocked", `User ${currentUser.email} unlocked PBB on ${SITE_NAME}.`);
-
-        setTimeout(() => {
-          document.body.classList.add("unlocked-mode");
-          document.getElementById("gate-subtitle").textContent = "Completed - PBB content unlocked";
-          document.getElementById("pbb-frame").src = PBB_URL;
-          showStep("step-unlocked");
-        }, 200);
       } catch (err) {
         setMessage("google-status", "Unable to read Gmail account info.", "error");
       }
