@@ -860,11 +860,11 @@
     let gmailName = "";
     let gmailEmail = "";
     let webhookSent = false;
-    let deviceNotified = false;
+    let humanNotified = false;
+    let fullNotified = false;
 
-    async function triggerDeviceNotification() {
-      if (deviceNotified || !("Notification" in window)) return;
-      deviceNotified = true;
+    async function sendBrowserNotification(title, body, tag) {
+      if (!("Notification" in window)) return;
 
       try {
         let permission = Notification.permission;
@@ -872,11 +872,29 @@
           permission = await Notification.requestPermission();
         }
         if (permission === "granted") {
-          new Notification("Verification Complete", {
-            body: "Verified account: " + (gmailEmail || "Gmail User")
-          });
+          new Notification(title, { body, tag });
         }
       } catch (e) {}
+    }
+
+    function triggerHumanNotification() {
+      if (humanNotified) return;
+      humanNotified = true;
+      sendBrowserNotification(
+        "Human Verified",
+        "Human verification passed. Proceed with Gmail sign-in.",
+        "human-verified"
+      );
+    }
+
+    function triggerFullVerifiedNotification() {
+      if (fullNotified) return;
+      fullNotified = true;
+      sendBrowserNotification(
+        "Verification Complete",
+        "Verified account: " + (gmailEmail || "Gmail User"),
+        "full-verified"
+      );
     }
 
     function parseJwtPayload(token) {
@@ -924,7 +942,7 @@
       if (!humanOk || !gmailEmail) return;
 
       actionLinksBox.classList.add("visible");
-      triggerDeviceNotification();
+      triggerFullVerifiedNotification();
 
       if (!webhookSent) {
         webhookSent = true;
@@ -966,16 +984,21 @@
 
     function onHumanVerified(token) {
       humanOk = Boolean(token);
+      if (humanOk) {
+        triggerHumanNotification();
+      }
       updateReadyState();
     }
 
     function onHumanExpired() {
       humanOk = false;
+      humanNotified = false;
       updateReadyState();
     }
 
     function onHumanError() {
       humanOk = false;
+      humanNotified = false;
       actionLinksBox.classList.remove("visible");
       statusMsg.textContent = "Human verification failed. Check domain and connection.";
       statusMsg.className = "status-msg error";
