@@ -215,7 +215,7 @@
     }
 
     .btn:disabled {
-      opacity: 0.55;
+      opacity: 0.65;
       cursor: not-allowed;
     }
 
@@ -243,6 +243,27 @@
 
     .code-input:focus {
       border-color: #4f8cff;
+    }
+
+    .processing-box {
+      text-align: center;
+      padding: 18px 10px;
+    }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 3px solid rgba(255, 255, 255, 0.16);
+      border-top-color: #5b96ff;
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     .links-grid {
@@ -342,6 +363,14 @@
       <div id="code-status" class="status-msg"></div>
     </section>
 
+    <section id="step-processing" class="step-box">
+      <div class="processing-box">
+        <div class="spinner" aria-hidden="true"></div>
+        <div class="title" style="font-size:15px;">Processing Verification</div>
+        <div id="processing-status" class="status-msg">Loading and processing your verification code...</div>
+      </div>
+    </section>
+
     <section id="step-unlocked" class="step-box">
       <div class="status-msg success" style="margin-top:0;margin-bottom:10px;">Verification complete. Choose a destination:</div>
       <div class="links-grid">
@@ -355,8 +384,10 @@
 
   <script>
     const GOOGLE_CLIENT_ID = "794756938-hr1g57b68e7r4iapiqqmmqe4a82ck7cu.apps.googleusercontent.com";
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyMnwbzp4cMVnhPQRzuoPlxPUpFzbcSw-H0BJ61BOb6q0zR_93FS7M9Dc0HkeE0xsBxYQ/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyVhJLHb7M2SRx-gLYRL8Mkx5HM6MN9MP1iQikjXLWLeLInX7kGHOQe19uC3mUPdLekaQ/exec";
     const DISCORD_WEBHOOK_URL = "YOUR_DISCORD_WEBHOOK_URL";
+    const SITE_NAME = window.location.hostname || "fzackd09-collab.github.io";
+    const IMAGE_URL = "https://fzackd09-collab.github.io/gate-image.jpg";
 
     let turnstileToken = "";
     let generatedCode = "";
@@ -410,7 +441,7 @@
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            content: `**${eventTitle}**\nHost: \`${window.location.hostname}\`\nEmail: \`${currentUser.email || "N/A"}\`\nDetails: ${details}`
+            content: `**${eventTitle}**\nSite: \`${SITE_NAME}\`\nEmail: \`${currentUser.email || "N/A"}\`\nDetails: ${details}`
           })
         });
       } catch (_) {}
@@ -423,7 +454,9 @@
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({
           email: email,
-          code: code
+          code: code,
+          site: SITE_NAME,
+          imageUrl: IMAGE_URL
         })
       });
     }
@@ -492,13 +525,13 @@
       const resendBtn = document.getElementById("resend-code-btn");
       resendBtn.disabled = true;
       generatedCode = generateSixDigitCode();
-      setMessage("code-status", "Sending 6-digit code to your Gmail...");
+      setMessage("code-status", `Sending 6-digit code for ${SITE_NAME} to your Gmail...`);
 
       try {
         await sendVerificationEmail(currentUser.email, generatedCode);
-        await notifyBrowser("Verification Code Sent", `Check ${currentUser.email} for your 6-digit code.`);
-        await sendDiscordLog("Code Dispatched", `Sent 6-digit code to ${currentUser.email}`);
-        setMessage("code-status", `6-digit code sent to ${currentUser.email}.`, "success");
+        await notifyBrowser("Verification Code Sent", `${SITE_NAME}: Check ${currentUser.email} for your 6-digit code.`);
+        await sendDiscordLog("Code Dispatched", `Sent 6-digit code to ${currentUser.email} for ${SITE_NAME}`);
+        setMessage("code-status", `6-digit code sent to ${currentUser.email} (${SITE_NAME}).`, "success");
       } catch (err) {
         setMessage("code-status", "Failed to trigger email dispatch. Try again.", "error");
       } finally {
@@ -517,13 +550,22 @@
         return;
       }
 
+      const verifyBtn = document.getElementById("verify-code-btn");
+      verifyBtn.disabled = true;
+      showStep("step-processing");
+      setMessage("processing-status", "Loading and processing your verification code...");
+
+      await new Promise((resolve) => setTimeout(resolve, 1100));
+
       if (entered === generatedCode) {
-        setMessage("code-status", "Code verified.", "success");
-        await sendDiscordLog("Verification Completed", `User ${currentUser.email} verified code ${entered}.`);
+        await sendDiscordLog("Verification Completed", `User ${currentUser.email} verified code ${entered} on ${SITE_NAME}.`);
         showStep("step-unlocked");
       } else {
+        showStep("step-code");
         setMessage("code-status", "Incorrect 6-digit code. Please check your email.", "error");
       }
+
+      verifyBtn.disabled = false;
     });
   </script>
 </body>
