@@ -355,7 +355,7 @@
       <div class="embed-wrap">
         <iframe id="pbb-frame" class="embed-frame" title="PBB Collab"></iframe>
       </div>
-      <div class="status-msg success">Completed and unlocked. If the embedded frame stays blank, tap Open PBB above.</div>
+      <div class="status-msg success">Completed and unlocked. If the frame is blank, tap Open PBB above.</div>
     </section>
   </main>
 
@@ -465,7 +465,7 @@
         }
 
         document.body.classList.add("unlocked-mode");
-        document.getElementById("gate-subtitle").textContent = "Completed - PBB content unlocked";
+        document.getElementById("gate-subtitle").textContent = "Completed - PBB unlocked";
         document.getElementById("pbb-frame").src = PBB_URL;
         showStep("step-unlocked");
 
