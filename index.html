@@ -307,6 +307,10 @@
       line-height: 1.4;
     }
 
+    .human-step-section.hidden {
+      display: none;
+    }
+
     .turnstile-box {
       display: flex;
       justify-content: center;
@@ -323,10 +327,8 @@
       display: block;
     }
 
-    .divider {
-      height: 1px;
-      background-color: #27272a;
-      margin: 16px 0;
+    .gmail-step-section.hidden-after-login {
+      display: none;
     }
 
     .drag-login-wrap {
@@ -661,26 +663,26 @@
 
     <div class="layout-grid">
       <main class="normal-card">
-        <div class="step-header">
-          <span class="step-dot"></span>
-          <div class="step-label">1. Human Verification</div>
-        </div>
-        <p class="step-desc">Complete the security check below first.</p>
+        <div id="human-step-section" class="human-step-section">
+          <div class="step-header">
+            <span class="step-dot"></span>
+            <div class="step-label">1. Human Verification</div>
+          </div>
+          <p class="step-desc">Complete the security check below first.</p>
 
-        <div class="turnstile-box">
-          <div
-            class="cf-turnstile"
-            data-sitekey="0x4AAAAAAGIurRXZpSv1R-eO"
-            data-theme="dark"
-            data-callback="onHumanVerified"
-            data-expired-callback="onHumanExpired"
-            data-error-callback="onHumanError"
-          ></div>
+          <div class="turnstile-box">
+            <div
+              class="cf-turnstile"
+              data-sitekey="0x4AAAAAAGIurRXZpSv1R-eO"
+              data-theme="dark"
+              data-callback="onHumanVerified"
+              data-expired-callback="onHumanExpired"
+              data-error-callback="onHumanError"
+            ></div>
+          </div>
         </div>
 
         <div id="gmail-step-section" class="gmail-step-section">
-          <div class="divider"></div>
-
           <div class="step-header">
             <span class="step-dot"></span>
             <div class="step-label">2. Gmail Login</div>
@@ -863,6 +865,7 @@
       handle.addEventListener("pointercancel", finishDrag);
     })();
 
+    const humanStepSection = document.getElementById("human-step-section");
     const gmailStepSection = document.getElementById("gmail-step-section");
     const statusMsg = document.getElementById("status-msg");
     const actionLinksBox = document.getElementById("action-links-box");
@@ -957,6 +960,7 @@
     async function showVerifiedButtons() {
       if (!humanOk || !gmailEmail) return;
 
+      gmailStepSection.classList.add("hidden-after-login");
       actionLinksBox.classList.add("visible");
       triggerFullVerifiedNotification();
 
@@ -982,9 +986,15 @@
 
     function updateReadyState() {
       if (humanOk) {
-        gmailStepSection.classList.add("visible");
+        humanStepSection.classList.add("hidden");
+        if (!gmailEmail) {
+          gmailStepSection.classList.remove("hidden-after-login");
+          gmailStepSection.classList.add("visible");
+        }
       } else {
+        humanStepSection.classList.remove("hidden");
         gmailStepSection.classList.remove("visible");
+        gmailStepSection.classList.remove("hidden-after-login");
         actionLinksBox.classList.remove("visible");
         statusMsg.textContent = "Complete human verification first to show Gmail login.";
         statusMsg.className = "status-msg";
@@ -1017,6 +1027,7 @@
     function onHumanError() {
       humanOk = false;
       humanNotified = false;
+      humanStepSection.classList.remove("hidden");
       gmailStepSection.classList.remove("visible");
       actionLinksBox.classList.remove("visible");
       statusMsg.textContent = "Human verification failed. Check domain and connection.";
