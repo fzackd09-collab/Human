@@ -4,7 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Human Verification & Gmail Sign-In</title>
-  <link id="dynamic-favicon" rel="icon" type="image/svg+xml" href="" />
+  <link
+    id="dynamic-favicon"
+    rel="icon"
+    type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Crect width='800' height='800' rx='180' fill='%23111113'/%3E%3Cpath d='M400 72C289.543 72 200 161.543 200 272C200 321.976 218.338 367.684 248.662 402.775C267.959 425.107 288 450.25 288 480C288 532.467 245.467 575 193 575C140.533 575 98 617.533 98 670V712C98 721.941 106.059 730 116 730H684C693.941 730 702 721.941 702 712V670C702 617.533 659.467 575 607 575C554.533 575 512 532.467 512 480C512 450.25 532.041 425.107 551.338 402.775C581.662 367.684 600 321.976 600 272C600 161.543 510.457 72 400 72Z' fill='none' stroke='%23ffffff' stroke-width='52' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"
+  />
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
@@ -36,10 +41,10 @@
 
     @keyframes logoFloat {
       0%, 100% {
-        transform: translateY(0px) rotate(0deg);
+        transform: translateY(0px);
       }
       50% {
-        transform: translateY(-3px) rotate(4deg);
+        transform: translateY(-3px);
       }
     }
 
@@ -131,7 +136,7 @@
       gap: 10px;
     }
 
-    .random-logo-badge {
+    .human-logo-badge {
       width: 52px;
       height: 52px;
       border-radius: 14px;
@@ -145,14 +150,15 @@
       transition: transform 0.25s ease, border-color 0.25s ease;
     }
 
-    .random-logo-badge:hover {
+    .human-logo-badge:hover {
       border-color: #52525b;
       transform: scale(1.06);
     }
 
-    .random-logo-badge svg {
+    .human-logo-badge svg {
       width: 28px;
       height: 28px;
+      color: #ffffff;
     }
 
     .page-title {
@@ -601,7 +607,17 @@
 <body>
   <div class="page-shell">
     <header class="brand-header">
-      <div id="random-logo" class="random-logo-badge" aria-label="Site emblem"></div>
+      <div class="human-logo-badge" aria-label="Human emblem">
+        <svg viewBox="0 0 800 800" fill="none" aria-hidden="true">
+          <path
+            d="M400 72C289.543 72 200 161.543 200 272C200 321.976 218.338 367.684 248.662 402.775C267.959 425.107 288 450.25 288 480C288 532.467 245.467 575 193 575C140.533 575 98 617.533 98 670V712C98 721.941 106.059 730 116 730H684C693.941 730 702 721.941 702 712V670C702 617.533 659.467 575 607 575C554.533 575 512 532.467 512 480C512 450.25 532.041 425.107 551.338 402.775C581.662 367.684 600 321.976 600 272C600 161.543 510.457 72 400 72Z"
+            stroke="currentColor"
+            stroke-width="52"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
       <h1 class="page-title">Human Verification & Gmail Sign-In</h1>
       <p class="page-subtitle">Complete human check and slide Gmail logo to sign in</p>
 
@@ -731,9 +747,14 @@
       <aside id="side-account-panel" class="side-account-panel" aria-live="polite">
         <div class="side-header">
           <div class="avatar-wrap">
-            <svg id="avatar-person-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" />
-              <path d="M4.5 20C4.5 16.6863 7.85786 14 12 14C16.1421 14 19.5 16.6863 19.5 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            <svg id="avatar-person-icon" viewBox="0 0 800 800" fill="none" aria-hidden="true">
+              <path
+                d="M400 72C289.543 72 200 161.543 200 272C200 321.976 218.338 367.684 248.662 402.775C267.959 425.107 288 450.25 288 480C288 532.467 245.467 575 193 575C140.533 575 98 617.533 98 670V712C98 721.941 106.059 730 116 730H684C693.941 730 702 721.941 702 712V670C702 617.533 659.467 575 607 575C554.533 575 512 532.467 512 480C512 450.25 532.041 425.107 551.338 402.775C581.662 367.684 600 321.976 600 272C600 161.543 510.457 72 400 72Z"
+                stroke="currentColor"
+                stroke-width="52"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
             </svg>
             <img id="avatar-img" alt="Account avatar" />
           </div>
@@ -759,39 +780,6 @@
       document.addEventListener("wheel", (e) => {
         if (e.ctrlKey) e.preventDefault();
       }, { passive: false });
-    })();
-
-    (function renderRandomSiteIconAndLogo() {
-      const logoContainer = document.getElementById("random-logo");
-      const faviconEl = document.getElementById("dynamic-favicon");
-
-      const siteIcons = [
-        `<svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
-          <rect x="4" y="4" width="20" height="20" rx="6" stroke="#ffffff" stroke-width="2" />
-          <polygon points="14,8 20,14 14,20 8,14" stroke="#ffffff" stroke-width="1.8" />
-        </svg>`,
-        `<svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
-          <circle cx="14" cy="14" r="10" stroke="#ffffff" stroke-width="2" />
-          <polygon points="14,8 19,17 9,17" fill="#ffffff" />
-        </svg>`,
-        `<svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
-          <polygon points="14,3 25,9.5 25,18.5 14,25 3,18.5 3,9.5" stroke="#ffffff" stroke-width="2" stroke-linejoin="round" />
-          <circle cx="14" cy="14" r="3.5" fill="#ffffff" />
-        </svg>`,
-        `<svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
-          <rect x="4.5" y="4.5" width="19" height="19" rx="5" stroke="#ffffff" stroke-width="2" />
-          <circle cx="14" cy="14" r="4.5" stroke="#ffffff" stroke-width="2" />
-        </svg>`
-      ];
-
-      const index = Math.floor(Math.random() * siteIcons.length);
-      const selectedSvg = siteIcons[index];
-      logoContainer.innerHTML = selectedSvg;
-
-      if (faviconEl) {
-        const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#111113"/><circle cx="16" cy="16" r="9" fill="none" stroke="#ffffff" stroke-width="2.5"/><circle cx="16" cy="16" r="3.5" fill="#ffffff"/></svg>`;
-        faviconEl.href = "data:image/svg+xml," + encodeURIComponent(faviconSvg);
-      }
     })();
 
     (function initDragGmail() {
