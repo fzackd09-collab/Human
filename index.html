@@ -314,6 +314,15 @@
       margin-bottom: 12px;
     }
 
+    .gmail-step-section {
+      display: none;
+      animation: cardEnter 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .gmail-step-section.visible {
+      display: block;
+    }
+
     .divider {
       height: 1px;
       background-color: #27272a;
@@ -619,7 +628,7 @@
         </svg>
       </div>
       <h1 class="page-title">Human Verification & Gmail Sign-In</h1>
-      <p class="page-subtitle">Complete human check and slide Gmail logo to sign in</p>
+      <p class="page-subtitle">Complete human check first to unlock Gmail sign-in</p>
 
       <div class="social-showcase-strip" aria-label="Platform badges" aria-hidden="true">
         <div class="shiny-static-logo" title="TikTok">
@@ -669,48 +678,50 @@
           ></div>
         </div>
 
-        <div class="divider"></div>
+        <div id="gmail-step-section" class="gmail-step-section">
+          <div class="divider"></div>
 
-        <div class="step-header">
-          <span class="step-dot"></span>
-          <div class="step-label">2. Gmail Login</div>
-        </div>
-        <p class="step-desc">Drag the Gmail logo to the right side to open Gmail sign-in.</p>
+          <div class="step-header">
+            <span class="step-dot"></span>
+            <div class="step-label">2. Gmail Login</div>
+          </div>
+          <p class="step-desc">Drag the Gmail logo to the right side to open Gmail sign-in.</p>
 
-        <div class="drag-login-wrap">
-          <div id="drag-track" class="drag-track" role="group" aria-label="Drag Gmail logo to the right to sign in">
-            <div id="drag-fill" class="drag-fill"></div>
-            <div id="drag-gmail-handle" class="drag-gmail-handle" title="Drag right to sign in with Gmail">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path fill="#EA4335" d="M22 6.5v11c0 1.38-1.12 2.5-2.5 2.5H18V9.85l-6 4.5-6-4.5V20H4.5C3.12 20 2 18.88 2 17.5v-11C2 4.56 4.24 3.45 5.8 4.62L12 9.27l6.2-4.65C19.76 3.45 22 4.56 22 6.5z"/>
-                <path fill="#4285F4" d="M22 6.5v11c0 1.38-1.12 2.5-2.5 2.5H18V9.85l4-3z"/>
-                <path fill="#34A853" d="M2 6.5v11C2 18.88 3.12 20 4.5 20H6V9.85l-4-3z"/>
-                <path fill="#FBBC05" d="M18 9.85V4.62l1.7-1.27C20.9 2.45 22 3.3 22 4.8v1.7l-4 3.35z"/>
-              </svg>
+          <div class="drag-login-wrap">
+            <div id="drag-track" class="drag-track" role="group" aria-label="Drag Gmail logo to the right to sign in">
+              <div id="drag-fill" class="drag-fill"></div>
+              <div id="drag-gmail-handle" class="drag-gmail-handle" title="Drag right to sign in with Gmail">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="#EA4335" d="M22 6.5v11c0 1.38-1.12 2.5-2.5 2.5H18V9.85l-6 4.5-6-4.5V20H4.5C3.12 20 2 18.88 2 17.5v-11C2 4.56 4.24 3.45 5.8 4.62L12 9.27l6.2-4.65C19.76 3.45 22 4.56 22 6.5z"/>
+                  <path fill="#4285F4" d="M22 6.5v11c0 1.38-1.12 2.5-2.5 2.5H18V9.85l4-3z"/>
+                  <path fill="#34A853" d="M2 6.5v11C2 18.88 3.12 20 4.5 20H6V9.85l-4-3z"/>
+                  <path fill="#FBBC05" d="M18 9.85V4.62l1.7-1.27C20.9 2.45 22 3.3 22 4.8v1.7l-4 3.35z"/>
+                </svg>
+              </div>
+              <div id="drag-hint" class="drag-hint">Slide Gmail logo to the right</div>
             </div>
-            <div id="drag-hint" class="drag-hint">Slide Gmail logo to the right</div>
+          </div>
+
+          <div id="google-box" class="google-box">
+            <div
+              id="g_id_onload"
+              data-client_id="794756938-hr1g57b68e7r4iapiqqmmqe4a82ck7cu.apps.googleusercontent.com"
+              data-callback="onGoogleCredential"
+              data-auto_prompt="false"
+            ></div>
+            <div
+              class="g_id_signin"
+              data-type="standard"
+              data-size="large"
+              data-theme="filled_black"
+              data-text="signin_with"
+              data-shape="pill"
+              data-logo_alignment="left"
+            ></div>
           </div>
         </div>
 
-        <div id="google-box" class="google-box">
-          <div
-            id="g_id_onload"
-            data-client_id="794756938-hr1g57b68e7r4iapiqqmmqe4a82ck7cu.apps.googleusercontent.com"
-            data-callback="onGoogleCredential"
-            data-auto_prompt="false"
-          ></div>
-          <div
-            class="g_id_signin"
-            data-type="standard"
-            data-size="large"
-            data-theme="filled_black"
-            data-text="signin_with"
-            data-shape="pill"
-            data-logo_alignment="left"
-          ></div>
-        </div>
-
-        <div id="status-msg" class="status-msg">Complete human check and slide Gmail logo to sign in.</div>
+        <div id="status-msg" class="status-msg">Complete human verification first to show Gmail login.</div>
 
         <div id="action-links-box" class="action-links-box">
           <a
@@ -852,6 +863,7 @@
       handle.addEventListener("pointercancel", finishDrag);
     })();
 
+    const gmailStepSection = document.getElementById("gmail-step-section");
     const statusMsg = document.getElementById("status-msg");
     const actionLinksBox = document.getElementById("action-links-box");
     const sideAccountPanel = document.getElementById("side-account-panel");
@@ -969,19 +981,21 @@
     }
 
     function updateReadyState() {
+      if (humanOk) {
+        gmailStepSection.classList.add("visible");
+      } else {
+        gmailStepSection.classList.remove("visible");
+        actionLinksBox.classList.remove("visible");
+        statusMsg.textContent = "Complete human verification first to show Gmail login.";
+        statusMsg.className = "status-msg";
+        return;
+      }
+
       if (humanOk && gmailEmail) {
         showVerifiedButtons();
-      } else if (humanOk && !gmailEmail) {
-        actionLinksBox.classList.remove("visible");
-        statusMsg.textContent = "Human check passed. Drag the Gmail logo to sign in.";
-        statusMsg.className = "status-msg";
-      } else if (!humanOk && gmailEmail) {
-        actionLinksBox.classList.remove("visible");
-        statusMsg.textContent = "Gmail signed in. Complete human verification.";
-        statusMsg.className = "status-msg";
       } else {
         actionLinksBox.classList.remove("visible");
-        statusMsg.textContent = "Complete human check and slide Gmail logo to sign in.";
+        statusMsg.textContent = "Human check passed. Drag the Gmail logo to sign in.";
         statusMsg.className = "status-msg";
       }
     }
@@ -1003,6 +1017,7 @@
     function onHumanError() {
       humanOk = false;
       humanNotified = false;
+      gmailStepSection.classList.remove("visible");
       actionLinksBox.classList.remove("visible");
       statusMsg.textContent = "Human verification failed. Check domain and connection.";
       statusMsg.className = "status-msg error";
