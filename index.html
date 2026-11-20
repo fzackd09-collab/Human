@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Human Verification & Gmail Sign-In</title>
+  <link id="dynamic-favicon" rel="icon" type="image/svg+xml" href="" />
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
@@ -539,13 +540,17 @@
       background-color: #27272a;
       border: 1px solid #3f3f46;
       color: #ffffff;
-      font-size: 16px;
-      font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
       flex-shrink: 0;
+    }
+
+    .avatar-wrap svg {
+      width: 22px;
+      height: 22px;
+      color: #ffffff;
     }
 
     .avatar-wrap img {
@@ -596,7 +601,7 @@
 <body>
   <div class="page-shell">
     <header class="brand-header">
-      <div id="random-logo" class="random-logo-badge" aria-label="Random emblem"></div>
+      <div id="random-logo" class="random-logo-badge" aria-label="Site emblem"></div>
       <h1 class="page-title">Human Verification & Gmail Sign-In</h1>
       <p class="page-subtitle">Complete human check and slide Gmail logo to sign in</p>
 
@@ -726,7 +731,10 @@
       <aside id="side-account-panel" class="side-account-panel" aria-live="polite">
         <div class="side-header">
           <div class="avatar-wrap">
-            <span id="avatar-initial">G</span>
+            <svg id="avatar-person-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" />
+              <path d="M4.5 20C4.5 16.6863 7.85786 14 12 14C16.1421 14 19.5 16.6863 19.5 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
             <img id="avatar-img" alt="Account avatar" />
           </div>
           <div style="min-width: 0;">
@@ -753,29 +761,37 @@
       }, { passive: false });
     })();
 
-    (function renderRandomLogo() {
+    (function renderRandomSiteIconAndLogo() {
       const logoContainer = document.getElementById("random-logo");
-      const logos = [
+      const faviconEl = document.getElementById("dynamic-favicon");
+
+      const siteIcons = [
         `<svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
-          <polygon points="14,3 25,14 14,25 3,14" stroke="#ffffff" stroke-width="2" />
-          <circle cx="14" cy="14" r="4" fill="#ffffff" />
-        </svg>`,
-        `<svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
-          <polygon points="14,4 25,23 3,23" stroke="#ffffff" stroke-width="2" stroke-linejoin="round" />
-          <circle cx="14" cy="17" r="3" fill="#a1a1aa" />
-        </svg>`,
-        `<svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
-          <rect x="5" y="5" width="18" height="18" rx="4" stroke="#ffffff" stroke-width="2" />
-          <line x1="9" y1="14" x2="19" y2="14" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
-          <line x1="14" y1="9" x2="14" y2="19" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+          <rect x="4" y="4" width="20" height="20" rx="6" stroke="#ffffff" stroke-width="2" />
+          <polygon points="14,8 20,14 14,20 8,14" stroke="#ffffff" stroke-width="1.8" />
         </svg>`,
         `<svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
           <circle cx="14" cy="14" r="10" stroke="#ffffff" stroke-width="2" />
-          <path d="M9 14.5L12.5 18L19.5 10.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <polygon points="14,8 19,17 9,17" fill="#ffffff" />
+        </svg>`,
+        `<svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <polygon points="14,3 25,9.5 25,18.5 14,25 3,18.5 3,9.5" stroke="#ffffff" stroke-width="2" stroke-linejoin="round" />
+          <circle cx="14" cy="14" r="3.5" fill="#ffffff" />
+        </svg>`,
+        `<svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <rect x="4.5" y="4.5" width="19" height="19" rx="5" stroke="#ffffff" stroke-width="2" />
+          <circle cx="14" cy="14" r="4.5" stroke="#ffffff" stroke-width="2" />
         </svg>`
       ];
-      const index = Math.floor(Math.random() * logos.length);
-      logoContainer.innerHTML = logos[index];
+
+      const index = Math.floor(Math.random() * siteIcons.length);
+      const selectedSvg = siteIcons[index];
+      logoContainer.innerHTML = selectedSvg;
+
+      if (faviconEl) {
+        const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#111113"/><circle cx="16" cy="16" r="9" fill="none" stroke="#ffffff" stroke-width="2.5"/><circle cx="16" cy="16" r="3.5" fill="#ffffff"/></svg>`;
+        faviconEl.href = "data:image/svg+xml," + encodeURIComponent(faviconSvg);
+      }
     })();
 
     (function initDragGmail() {
@@ -851,7 +867,7 @@
     const statusMsg = document.getElementById("status-msg");
     const actionLinksBox = document.getElementById("action-links-box");
     const sideAccountPanel = document.getElementById("side-account-panel");
-    const avatarInitial = document.getElementById("avatar-initial");
+    const avatarPersonIcon = document.getElementById("avatar-person-icon");
     const avatarImg = document.getElementById("avatar-img");
     const accountName = document.getElementById("account-name");
     const accountEmail = document.getElementById("account-email");
@@ -1012,14 +1028,16 @@
 
         accountName.textContent = gmailName;
         accountEmail.textContent = gmailEmail;
-        avatarInitial.textContent = gmailName.charAt(0).toUpperCase() || "G";
 
         if (profile.picture) {
           avatarImg.src = profile.picture;
           avatarImg.onload = () => {
             avatarImg.style.display = "block";
-            avatarInitial.style.display = "none";
+            avatarPersonIcon.style.display = "none";
           };
+        } else {
+          avatarImg.style.display = "none";
+          avatarPersonIcon.style.display = "block";
         }
 
         sideAccountPanel.classList.add("visible");
