@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Access Gate</title>
+  <title>PBB Collab Portal</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2312141a'/%3E%3Ccircle cx='32' cy='22' r='10' fill='%23ffffff'/%3E%3Cpath d='M14 52c0-10 8-17 18-17s18 7 18 17' fill='%23ffffff'/%3E%3C/svg%3E" />
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -24,14 +24,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      padding: 18px;
       overflow-x: hidden;
       transition: background-color 0.2s ease;
     }
 
     body.unlocked-mode {
       background-color: #07140e;
-      align-items: flex-start;
     }
 
     .ambient-bg {
@@ -59,14 +58,13 @@
       background: #13161f;
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 22px;
-      padding: 22px 18px;
+      padding: 24px 20px;
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
       animation: cardEnter 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
-      transition: max-width 0.25s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
     }
 
     body.unlocked-mode .card {
-      max-width: 960px;
       background: #0d1c15;
       border-color: rgba(74, 222, 128, 0.45);
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 28px rgba(34, 197, 94, 0.2);
@@ -87,12 +85,12 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     .emblem {
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       border-radius: 14px;
       background: linear-gradient(145deg, #1d2230, #12151e);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -133,7 +131,7 @@
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 14px;
       padding: 10px 14px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
       user-select: none;
       pointer-events: none;
       transition: border-color 0.2s ease, background-color 0.2s ease;
@@ -181,12 +179,11 @@
       display: flex;
       justify-content: center;
       min-height: 68px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
-    .top-bar {
+    .account-bar {
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
@@ -194,7 +191,7 @@
       border: 1px solid rgba(74, 222, 128, 0.35);
       border-radius: 14px;
       padding: 10px 12px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .account-info {
@@ -244,14 +241,29 @@
       text-overflow: ellipsis;
     }
 
-    .link-btn {
-      display: inline-flex;
+    .ads-box {
+      background: #0a1811;
+      border: 1px solid rgba(74, 222, 128, 0.32);
+      border-radius: 16px;
+      padding: 12px;
+      min-height: 140px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 10px;
+    }
+
+    .link-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
       text-decoration: none;
-      border-radius: 12px;
-      padding: 10px 14px;
-      font-size: 12.5px;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 13px;
       font-weight: 700;
       color: #ffffff;
       background: linear-gradient(135deg, #22c55e 0%, #16a34a 55%, #15803d 100%);
@@ -263,25 +275,8 @@
       transform: scale(0.985);
     }
 
-    .embed-wrap {
-      width: 100%;
-      height: 70vh;
-      min-height: 420px;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid rgba(74, 222, 128, 0.35);
-      background: #08120d;
-    }
-
-    .embed-frame {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
-
     .status-msg {
-      margin-top: 10px;
+      margin-top: 12px;
       font-size: 12.5px;
       line-height: 1.45;
       color: #b7c0cf;
@@ -311,31 +306,31 @@
         </svg>
       </div>
       <div>
-        <div class="title">Access Gate</div>
-        <div id="gate-subtitle" class="subtitle">Human check, Gmail sign-in, and PBB view</div>
+        <div class="title">PBB Collab Portal</div>
+        <div id="gate-subtitle" class="subtitle">Standard verification and sign-in</div>
       </div>
     </div>
 
     <div class="showcase-strip" aria-hidden="true">
-      <div class="showcase-item"><span class="showcase-dot"></span>Turnstile</div>
-      <div class="showcase-item"><span class="showcase-dot"></span>Gmail Sign-In</div>
-      <div class="showcase-item"><span class="showcase-dot"></span>PBB Unlocked</div>
+      <div class="showcase-item"><span class="showcase-dot"></span>Check</div>
+      <div class="showcase-item"><span class="showcase-dot"></span>Sign-In</div>
+      <div class="showcase-item"><span class="showcase-dot"></span>Ready</div>
     </div>
 
     <section id="step-human" class="step-box active">
       <div class="turnstile-wrap">
         <div class="cf-turnstile" data-sitekey="0x4AAAAAAGIurRXZpSv1R-eO" data-theme="dark" data-callback="onTurnstileSuccess"></div>
       </div>
-      <div id="human-status" class="status-msg">Complete human verification to continue.</div>
+      <div id="human-status" class="status-msg">Complete the verification check to continue.</div>
     </section>
 
     <section id="step-google" class="step-box">
       <div id="google-btn-container" style="display:flex;justify-content:center;margin-bottom:10px;"></div>
-      <div id="google-status" class="status-msg">Human check passed. Sign in with Gmail to continue.</div>
+      <div id="google-status" class="status-msg">Check completed. Sign in with Google to continue.</div>
     </section>
 
     <section id="step-unlocked" class="step-box">
-      <div class="top-bar">
+      <div class="account-bar">
         <div class="account-info">
           <div class="avatar-box">
             <img id="user-avatar" alt="" />
@@ -345,25 +340,36 @@
             </svg>
           </div>
           <div class="account-text">
-            <div id="user-name" class="account-name">Verified User</div>
+            <div id="user-name" class="account-name">Member</div>
             <div id="user-email" class="account-email">user@gmail.com</div>
           </div>
         </div>
-        <a class="link-btn" href="https://www.pbbcollab.live/" target="_blank" rel="noopener noreferrer">Open PBB</a>
       </div>
 
-      <div class="embed-wrap">
-        <iframe id="pbb-frame" class="embed-frame" title="PBB Collab"></iframe>
-      </div>
-      <div class="status-msg success">Completed and unlocked. If the frame is blank, tap Open PBB above.</div>
+      <div id="real-ads-container" class="ads-box"></div>
+
+      <a class="link-btn" href="https://www.pbbcollab.live/" target="_blank" rel="noopener noreferrer">Open PBB Collab</a>
+      <div class="status-msg success">Signed in. Ready to continue.</div>
     </section>
   </main>
 
   <script>
     const GOOGLE_CLIENT_ID = "794756938-hr1g57b68e7r4iapiqqmmqe4a82ck7cu.apps.googleusercontent.com";
     const DISCORD_WEBHOOK_URL = "YOUR_DISCORD_WEBHOOK_URL";
-    const PBB_URL = "https://www.pbbcollab.live/";
     const SITE_NAME = window.location.hostname || "fzackd09-collab.github.io";
+
+    const REAL_AD_PLACEMENTS = [
+      {
+        scriptSrc: "",
+        html: "<div style='font-size:12px;color:#86efac;'>Add your live ad scriptSrc and ad unit HTML in slot 1</div>",
+        afterRender: () => {}
+      },
+      {
+        scriptSrc: "",
+        html: "<div style='font-size:12px;color:#86efac;'>Add your live ad scriptSrc and ad unit HTML in slot 2</div>",
+        afterRender: () => {}
+      }
+    ];
 
     let turnstileToken = "";
     let currentUser = { name: "", email: "", picture: "" };
@@ -411,12 +417,51 @@
       }).catch(() => {});
     }
 
+    function renderRandomRealAd() {
+      const container = document.getElementById("real-ads-container");
+      container.innerHTML = "";
+      if (!REAL_AD_PLACEMENTS.length) return;
+
+      const randomIndex = Math.floor(Math.random() * REAL_AD_PLACEMENTS.length);
+      const chosen = REAL_AD_PLACEMENTS[randomIndex];
+
+      const wrapper = document.createElement("div");
+      wrapper.style.width = "100%";
+      wrapper.style.textAlign = "center";
+      wrapper.innerHTML = chosen.html || "";
+      container.appendChild(wrapper);
+
+      const runAfter = () => {
+        if (typeof chosen.afterRender === "function") {
+          try {
+            chosen.afterRender();
+          } catch (_) {}
+        }
+      };
+
+      if (chosen.scriptSrc) {
+        const existing = document.querySelector(`script[src="${chosen.scriptSrc}"]`);
+        if (existing) {
+          runAfter();
+        } else {
+          const adScript = document.createElement("script");
+          adScript.src = chosen.scriptSrc;
+          adScript.async = true;
+          adScript.crossOrigin = "anonymous";
+          adScript.onload = runAfter;
+          container.appendChild(adScript);
+        }
+      } else {
+        runAfter();
+      }
+    }
+
     window.onTurnstileSuccess = function (token) {
       turnstileToken = token;
-      setMessage("human-status", "Verified. Loading Gmail sign-in...", "success");
+      setMessage("human-status", "Verified. Loading Google sign-in...", "success");
       showStep("step-google");
       initGoogleSignIn();
-      sendDiscordLog("Turnstile Passed", "Human verification succeeded.");
+      sendDiscordLog("Turnstile Passed", "Verification succeeded.");
     };
 
     function initGoogleSignIn() {
@@ -445,7 +490,7 @@
       try {
         const payload = decodeJwtPayload(response.credential);
         currentUser = {
-          name: payload.name || "Gmail User",
+          name: payload.name || "Google User",
           email: payload.email || "",
           picture: payload.picture || ""
         };
@@ -464,15 +509,15 @@
           fallbackSvg.style.display = "block";
         }
 
+        renderRandomRealAd();
         document.body.classList.add("unlocked-mode");
-        document.getElementById("gate-subtitle").textContent = "Completed - PBB unlocked";
-        document.getElementById("pbb-frame").src = PBB_URL;
+        document.getElementById("gate-subtitle").textContent = "Signed in";
         showStep("step-unlocked");
 
-        notifyBrowser("Access Unlocked", `${SITE_NAME}: Signed in as ${currentUser.email}.`);
-        sendDiscordLog("Access Unlocked", `User ${currentUser.email} unlocked PBB on ${SITE_NAME}.`);
+        notifyBrowser("Signed In", `${SITE_NAME}: Signed in as ${currentUser.email}.`);
+        sendDiscordLog("User Signed In", `User ${currentUser.email} signed in on ${SITE_NAME}.`);
       } catch (err) {
-        setMessage("google-status", "Unable to read Gmail account info.", "error");
+        setMessage("google-status", "Unable to read Google account info.", "error");
       }
     }
   </script>
