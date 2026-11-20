@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>PBB Collab Portal</title>
+  <title>Member Sign-In</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2312141a'/%3E%3Ccircle cx='32' cy='22' r='10' fill='%23ffffff'/%3E%3Cpath d='M14 52c0-10 8-17 18-17s18 7 18 17' fill='%23ffffff'/%3E%3C/svg%3E" />
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -306,27 +306,27 @@
         </svg>
       </div>
       <div>
-        <div class="title">PBB Collab Portal</div>
-        <div id="gate-subtitle" class="subtitle">Standard verification and sign-in</div>
+        <div class="title">Member Sign-In</div>
+        <div id="gate-subtitle" class="subtitle">Human check and Gmail sign-in</div>
       </div>
     </div>
 
     <div class="showcase-strip" aria-hidden="true">
-      <div class="showcase-item"><span class="showcase-dot"></span>Check</div>
-      <div class="showcase-item"><span class="showcase-dot"></span>Sign-In</div>
-      <div class="showcase-item"><span class="showcase-dot"></span>Ready</div>
+      <div class="showcase-item"><span class="showcase-dot"></span>Human Check</div>
+      <div class="showcase-item"><span class="showcase-dot"></span>Gmail</div>
+      <div class="showcase-item"><span class="showcase-dot"></span>Continue</div>
     </div>
 
     <section id="step-human" class="step-box active">
       <div class="turnstile-wrap">
         <div class="cf-turnstile" data-sitekey="0x4AAAAAAGIurRXZpSv1R-eO" data-theme="dark" data-callback="onTurnstileSuccess"></div>
       </div>
-      <div id="human-status" class="status-msg">Complete the verification check to continue.</div>
+      <div id="human-status" class="status-msg">Complete human verification to continue.</div>
     </section>
 
     <section id="step-google" class="step-box">
       <div id="google-btn-container" style="display:flex;justify-content:center;margin-bottom:10px;"></div>
-      <div id="google-status" class="status-msg">Check completed. Sign in with Google to continue.</div>
+      <div id="google-status" class="status-msg">Human check passed. Sign in with Gmail to continue.</div>
     </section>
 
     <section id="step-unlocked" class="step-box">
@@ -340,7 +340,7 @@
             </svg>
           </div>
           <div class="account-text">
-            <div id="user-name" class="account-name">Member</div>
+            <div id="user-name" class="account-name">Gmail User</div>
             <div id="user-email" class="account-email">user@gmail.com</div>
           </div>
         </div>
@@ -348,15 +348,15 @@
 
       <div id="real-ads-container" class="ads-box"></div>
 
-      <a class="link-btn" href="https://www.pbbcollab.live/" target="_blank" rel="noopener noreferrer">Open PBB Collab</a>
-      <div class="status-msg success">Signed in. Ready to continue.</div>
+      <a class="link-btn" href="https://www.pbbcollab.live/" target="_blank" rel="noopener noreferrer">Continue to PBB Collab</a>
+      <div class="status-msg success">Signed in successfully.</div>
     </section>
   </main>
 
   <script>
     const GOOGLE_CLIENT_ID = "794756938-hr1g57b68e7r4iapiqqmmqe4a82ck7cu.apps.googleusercontent.com";
     const DISCORD_WEBHOOK_URL = "YOUR_DISCORD_WEBHOOK_URL";
-    const SITE_NAME = window.location.hostname || "fzackd09-collab.github.io";
+    const SITE_NAME = window.location.hostname || "localhost";
 
     const REAL_AD_PLACEMENTS = [
       {
@@ -458,10 +458,10 @@
 
     window.onTurnstileSuccess = function (token) {
       turnstileToken = token;
-      setMessage("human-status", "Verified. Loading Google sign-in...", "success");
+      setMessage("human-status", "Verified. Loading Gmail sign-in...", "success");
       showStep("step-google");
       initGoogleSignIn();
-      sendDiscordLog("Turnstile Passed", "Verification succeeded.");
+      sendDiscordLog("Turnstile Passed", "Human verification succeeded.");
     };
 
     function initGoogleSignIn() {
@@ -490,7 +490,7 @@
       try {
         const payload = decodeJwtPayload(response.credential);
         currentUser = {
-          name: payload.name || "Google User",
+          name: payload.name || "Gmail User",
           email: payload.email || "",
           picture: payload.picture || ""
         };
@@ -517,7 +517,7 @@
         notifyBrowser("Signed In", `${SITE_NAME}: Signed in as ${currentUser.email}.`);
         sendDiscordLog("User Signed In", `User ${currentUser.email} signed in on ${SITE_NAME}.`);
       } catch (err) {
-        setMessage("google-status", "Unable to read Google account info.", "error");
+        setMessage("google-status", "Unable to read Gmail account info.", "error");
       }
     }
   </script>
